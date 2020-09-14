@@ -1,7 +1,13 @@
 from django.shortcuts import render
+from django.views.generic import ListView
+from .models import Sighting
 
-from django.http import HttpResponse
-
-# Create your views here.
+# Create views below:
 def home(request):
-    return HttpResponse('<h1>Hello Team Cleveland!</h1>')
+    return render(request, 'home.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+class SightingList(ListView):
+    model = Sighting
