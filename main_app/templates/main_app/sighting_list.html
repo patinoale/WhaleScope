@@ -5,12 +5,14 @@
 
 {% for object in object_list %}
   <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ object.title }}</span>
-      <p>Date: {{ object.date }}</p>
-      <p>Location: {{ object.location }}</p>
-      <p>Description: {{ object.description }}</p>
-    </div>
+    <a href="{% url 'detail' object.id %}">
+        <div class="card-content">
+        <span class="card-title">{{ object.title }}</span>
+        <p>Date: {{ object.date }}</p>
+        <p>Location: {{ object.location }}</p>
+        <p>Description: {{ object.description }}</p>
+        </div>
+    </a>
   </div>
 {% endfor %}
 
