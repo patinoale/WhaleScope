@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
 from .models import Sighting
 
 # Create views below:
@@ -14,3 +15,7 @@ class SightingList(ListView):
 
 class SightingDetail(DetailView):
     model = Sighting
+
+class SightingCreate(CreateView):
+    model = Sighting
+    fields = '__all__'
