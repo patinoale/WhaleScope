@@ -62,21 +62,20 @@ def add_comment(request, pk):
             new_comment = form.save(commit=False)
             new_comment.user = request.user
             new_comment.sighting = sighting
+            # reply_id = request.POST.get('comment_id')
+            # if reply_id:
+            #     comment_qs = Comment.objects.get(id=reply_id)
+            # comment = Comment.objects.create(post=post, user=request.user, text=text, reply=comment_qs)
             form.save()
             return redirect('detail', pk=sighting.pk)
     else:
         form = CommentForm()
     return render(request, 'detail', {'form': form})
 
-# class CommentCreate(CreateView):
-#     model = Comment
-#     form = CommentForm
-#     fields = '__all__'
-    
-    
-#     def form_valid(self, form, pk):
-#         form.instance.created_by = self.request.user
-#         new_comment = form.save(commit=False)
-#         new_comment.sighting_id = sighting_id
-#         
-#         return super(CommentCreate, self, pk=sighting.pk).form_valid(form)
+class CommentUpdate(UpdateView):
+    model = Comment
+    fields = ['text']
+
+class CommentDelete(DeleteView):
+    model = Comment
+    success_url = '/sightings/'
