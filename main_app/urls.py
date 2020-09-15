@@ -11,6 +11,6 @@ urlpatterns = [
     path('sightings/<int:pk>/delete', views.SightingDelete.as_view(), name='sightings_delete'),
     path('accounts/signup/', views.signup, name='signup'),
     path('sightings/<int:pk>/add_comment/', views.add_comment, name='add_comment'),
-    ## path('sightings/<int:pk>/comments_update/', views.comments_update, name='comments_update'),
+    path('sightings/<int:pk>/comments_update/', views.comments_update, name='comments_update'),
     path('sightings/<int:pk>/comments_delete/', views.CommentDelete.as_view(), name='comments_delete'),
 ]

@@ -72,9 +72,9 @@ def add_comment(request, pk):
         form = CommentForm()
     return render(request, 'detail', {'form': form})
 
-class CommentUpdate(UpdateView):
-    model = Comment
-    fields = ['text']
+def comments_update(request, id):
+    pass
+
 
 class CommentDelete(DeleteView):
     model = Comment
