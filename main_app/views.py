@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Sighting
+from .models import Sighting, Comment
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
@@ -45,3 +45,6 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+class Comments(ListView):
+    model = Comment

@@ -3,16 +3,31 @@
 
 <h1>Sighting Details</h1>
 
-<div class="card">
-    <div class="card-content">
-        <span class="card-title">{{ object.title }}</span>
-        <p>Date: {{ object.date }}</p>
-        <p>Location: {{ object.location }}</p>
-        <p>Description: {{ object.description }}</p>
+<div class="row">
+    <div class="col s6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ object.title }}</span>
+                <p>Date: {{ object.date }}</p>
+                <p>Location: {{ object.location }}</p>
+                <p>Description: {{ object.description }}</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'sightings_update' object.id %}">Edit</a>
+                <a href="{% url 'sightings_delete' object.id %}">Delete</a>
+            </div>
+        </div>
+        
     </div>
-    <div class="card-action">
-        <a href="{% url 'sightings_update' object.id %}">Edit</a>
-        <a href="{% url 'sightings_delete' object.id %}">Delete</a>
+</div>
+<hr>
+<div class="row">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">
+                Comments
+            </span>
+        </div>
     </div>
 </div>
 

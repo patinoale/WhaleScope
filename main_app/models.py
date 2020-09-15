@@ -17,3 +17,11 @@ class Sighting(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pk': self.id})
 
+class Comment(models.Model):
+    text = models.TextField(max_length=1000)
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    sighting = models.ForeignKey(Sighting, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.topic
