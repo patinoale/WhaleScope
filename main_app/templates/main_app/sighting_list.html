@@ -7,10 +7,11 @@
   <div class="card">
     <a href="{% url 'detail' object.id %}">
         <div class="card-content">
-        <span class="card-title">{{ object.title }}</span>
-        <p>Date: {{ object.date }}</p>
-        <p>Location: {{ object.location }}</p>
-        <p>Description: {{ object.description }}</p>
+          <span class="card-title">{{ object.title }}</span>
+          <p>Date: {{ object.date }}</p>
+          <p>Location: {{ object.location }}</p>
+          <p>Description: {{ object.description }}</p>
+          <p>Species: {{ object.get_species_display }}</p>
         </div>
     </a>
   </div>
