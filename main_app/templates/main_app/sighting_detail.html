@@ -38,7 +38,7 @@
                                         <div class="left" style="color: white"><small>{{comment.created_date}}</small></div>
                                   
                                 <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
-                            <a href="{% url 'comments_delete' comment.id %}">🚯</a>
+                            <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
                     </div>
                         <div id="edit_field_{{ comment.id }}" class="edit_field">
                             <form  action="{% url 'comments_update' object.id comment.id %}" method="post">

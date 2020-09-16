@@ -12,5 +12,6 @@ urlpatterns = [
     path('accounts/signup/', views.signup, name='signup'),
     path('sightings/<int:pk>/add_comment/', views.add_comment, name='add_comment'),
     path('sightings/<int:pk>/<int:comment_id>/', views.comments_update, name='comments_update'),
-    path('sightings/<int:pk>/comments_delete/', views.CommentDelete.as_view(), name='comments_delete'),
+    ### path('sightings/<int:pk>/<int:comment_id>/comments_delete', views.CommentDelete.as_view(), name='comments_delete'),
+    path('sightings/<int:pk>/<int:comment_id>/comments_delete', views.comments_delete, name='comments_delete'),
 ]
