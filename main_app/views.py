@@ -72,6 +72,7 @@ def add_comment(request, pk):
         form = CommentForm()
     return render(request, 'detail', {'form': form})
 
+
 def comments_update(request, pk, comment_id):
     sighting = get_object_or_404(Sighting, pk=pk)
     if request.method == 'POST':
@@ -84,6 +85,10 @@ def comments_update(request, pk, comment_id):
         return redirect('detail', pk=sighting.pk)
 
 
-class CommentDelete(DeleteView):
-    model = Comment
-    success_url = '/sightings/'
+def comments_delete(request, sighting_id, comment_id):
+    context={}
+    obj = get_object_or_404(Comment, id=comment_id)
+
+    if request.method == 'GET':
+        obj.delete()
+        return redirect('detail', sighting_id)
