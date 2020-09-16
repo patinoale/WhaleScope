@@ -30,7 +30,7 @@
             <input type="submit" value="Add Comment" class="btn">
         </form>
         <br>
-        {% if sighting.has_comments %}
+        {% if sighting.has_comments.count %}
             <h6>{{object.title.capitalize }} has {{ sighting.has_comments.count }} comment{{ sighting.has_comments.count|pluralize }}</h6>
                 {% for comment in sighting.comment_set.all %}
                     <div class="card-panel teal left-align">
@@ -53,9 +53,9 @@
                     {% endfor %}
 
         {% else %}
-                    <div>
-                        No Comments Yet
-                    </div>
+            <div>
+                No Comments Yet
+            </div>
         {% endif %} 
     </div>
 </div>
