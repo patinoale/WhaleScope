@@ -13,5 +13,4 @@ urlpatterns = [
     path('sightings/<int:pk>/add_comment/', views.add_comment, name='add_comment'),
     path('sightings/<int:pk>/<int:comment_id>/', views.comments_update, name='comments_update'),
     path('sightings/<int:sighting_id>/<int:comment_id>/comments_delete/', views.comments_delete, name='comments_delete'),
-
 ]
