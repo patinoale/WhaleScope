@@ -2,8 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User 
 from django.urls import reverse
 
+WHALE_SPECIES = (
+    ('1', 'Orca'),
+    ('2', 'Minke'),
+    ('3', 'Humpback'),
+    ('4', 'Dolphin'),
+    ('5', 'Seal'),
+    ('6', 'Sea Lion'),
+    ('7', 'Sea Otter'),
+    ('8', 'Other'),
+    ('9', 'Unknown')
+)
 
-# Create your models here.
 class Sighting(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField('sighting date')
@@ -11,6 +21,11 @@ class Sighting(models.Model):
     description = models.TextField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Need to add a species field with choices
+    species = models.CharField(
+        max_length=1,
+        choices=WHALE_SPECIES,
+        default=WHALE_SPECIES[0][0]
+    )
 
     def __str__(self):
         return self.title
@@ -36,3 +51,4 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+
