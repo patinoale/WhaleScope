@@ -77,17 +77,7 @@ def comments_update(request, pk, comment_id):
             return redirect('detail', pk=sighting.pk)
         else:
             form = CommentForm(data=request.POST)
-            if form.is_valid():
-                new_comment = form.save(commit=False)
-                new_comment.user = request.user
-                new_comment.sighting = sighting
-                form.save()
-                return redirect('detail', pk=sighting.pk)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['comment_form'] = CommentForm()
-        return redirect('detail', context)
+        return redirect('detail', pk=sighting.pk)
 
 
 class CommentDelete(DeleteView):

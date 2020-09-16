@@ -26,7 +26,6 @@ class Comment(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     sighting = models.ForeignKey(Sighting, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name="reply")
 
     def __str__(self):
         return str(self.text)
