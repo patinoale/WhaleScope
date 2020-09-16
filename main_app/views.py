@@ -36,7 +36,7 @@ class SightingCreate(CreateView):
 
 class SightingUpdate(UpdateView):
     model = Sighting
-    fields = ['date', 'location', 'description']
+    fields = ['date', 'location', 'description', 'species']
 
 class SightingDelete(DeleteView):
     model = Sighting
