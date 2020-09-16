@@ -8,18 +8,18 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Whale Scope</title>
   <!-- Ale to delete the next 2 lines for materialize for design. Will impact the 'species' selection in sighting_form.html -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
-  <header class="navbar-fixed">
+  <!-- <header class="navbar-fixed">
     <nav>
-      <div class="nav-wrapper">
+      <div class="nav-wrapper"> -->
         <ul>
-          <li><a href="{% url 'home' %}" class="left brand-logo">&nbsp;&nbsp;WhaleScope</a></li>
+          <li><a href="{% url 'home' %}">&nbsp;&nbsp;WhaleScope</a></li>
         </ul>
-        <ul class="right">
+        <ul>
           <li><a href="{% url 'about' %}">About</a></li>
           {% if user.is_authenticated %}
             <li><a href="{% url 'index' %}">My Sightings (Profile)</a></li>
@@ -30,15 +30,15 @@
             <li><a href="{% url 'login' %}">Log In</a></li>
           {% endif %}
         </ul>
-      </div>
-    </nav>
-  </header>
-  <main class="container">
+      <!-- </div>
+    </nav> -->
+  <!-- </header> -->
+  <main>
     {% block content %}
     {% endblock %}
   </main>
-  <footer class="page-footer">
-    <div class="right">All Rights Reserved, &copy; 2020 Whale Scope &nbsp;</div>
+  <footer>
+    <div>All Rights Reserved, &copy; 2020 Whale Scope &nbsp;</div>
   </footer>
 </body>
 </html>
