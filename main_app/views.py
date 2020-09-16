@@ -28,7 +28,11 @@ class SightingDetail(DetailView):
 
 class SightingCreate(CreateView):
     model = Sighting
-    fields = '__all__'
+    fields = ['title', 'date', 'location', 'description', 'species']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class SightingUpdate(UpdateView):
     model = Sighting
