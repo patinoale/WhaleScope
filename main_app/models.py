@@ -31,5 +31,8 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.text)
 
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'pk': self.id})
+
     class Meta:
         ordering = ['-created_date']

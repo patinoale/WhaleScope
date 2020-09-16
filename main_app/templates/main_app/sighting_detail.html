@@ -22,7 +22,7 @@
     </div>
 </div>
 <hr>
-<div class="row">
+<div class="row" id="comment_section">
         
         <form action="{% url 'add_comment' object.id %}" method="post">
             {% csrf_token %}
@@ -33,45 +33,33 @@
         {% if sighting.has_comments %}
         <h6>{{object.title.capitalize }} has {{ sighting.has_comments.count }} comment{{ sighting.has_comments.count|pluralize }}</h6>
         {% for comment in sighting.comment_set.all %}
-        <div class="card-panel  left-align">
-            
+        <div class="card-panel teal left-align">
                 <div style="display: inline-flex; color: white">{{ comment.text }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;"> written by {{ comment.user }}</div>
                 <br>
                 <div class="left" style="color: white"><small>{{comment.created_date}}</small></div>
                 <a class="right" style="color: white" href="">reply</a>
-                {% if user == commment.user %}
-                <a href="{% url 'comments_update' comment.id %}">✏️</a>
+                <button class="edit_button">✏️</button>
                 <a href="{% url 'comments_delete' comment.id %}">🚯</a>
-                {% endif %}
         </div>
-        <!-- <div class="card-panel teal right-align">
-            
-            <div style="display: inline-flex; color: white">{{ parent.comment.text }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;"> written by {{ comment.user }}</div>
-            <br>
-            <div class="left" style="color: white">{{parent.comment.created_date}}</div>
-            <a class="right" style="color: white" href="">reply</a>
-    </div> -->
-
-            <!-- <div class="comment_reply">
-                <form action="." method="post">
-                    <input type="hidden" name="{{ reply_id }}" value="{{ comment.id }}">
+        <div>
+          
+            <div class="edit_field" >
+                <form  action="{% url 'comments_update' object.id comment.id %}" method="post">
                     {% csrf_token %}
-                    {{ comment_form.as_p}}
-                    <input type="submit" value="Reply" class="btn">
-
-                </form> -->
+                    {{ comment_form.as_p }}
+                    <input type="submit" value="Edit Comment">
+                </form>
+            </div>
+           
+        </div>
             </div>
         {% endfor %}
             {% else %}
             <div>
                 No Comments Yet
-                
             </div>
-
-        
         {% endif %}
         
-    
 </div>
 
 

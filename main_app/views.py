@@ -56,24 +56,38 @@ def signup(request):
 
 def add_comment(request, pk):
     sighting = get_object_or_404(Sighting, pk=pk)
-    if request.method == "POST":
+    if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             new_comment = form.save(commit=False)
             new_comment.user = request.user
             new_comment.sighting = sighting
-            # reply_id = request.POST.get('comment_id')
-            # if reply_id:
-            #     comment_qs = Comment.objects.get(id=reply_id)
-            # comment = Comment.objects.create(post=post, user=request.user, text=text, reply=comment_qs)
             form.save()
             return redirect('detail', pk=sighting.pk)
     else:
         form = CommentForm()
     return render(request, 'detail', {'form': form})
 
-def comments_update(request, id):
-    pass
+def comments_update(request, pk, comment_id):
+    sighting = get_object_or_404(Sighting, pk=pk)
+    if request.method == 'POST':
+        if comment_id:
+            form = CommentForm(instance=Comment.objects.get(id=comment_id), data=request.POST)
+            form.save()
+            return redirect('detail', pk=sighting.pk)
+        else:
+            form = CommentForm(data=request.POST)
+            if form.is_valid():
+                new_comment = form.save(commit=False)
+                new_comment.user = request.user
+                new_comment.sighting = sighting
+                form.save()
+                return redirect('detail', pk=sighting.pk)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return redirect('detail', context)
 
 
 class CommentDelete(DeleteView):
