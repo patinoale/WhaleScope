@@ -33,7 +33,7 @@ def add_photo(request, sighting_id):
             photo.save()
         except:
             print('An error occurred uploading file to S3')
-    return redirect('detail', pk=sighting.pk)
+    return redirect('detail', pk=sighting_id)
 
 class SightingList(ListView):
     model = Sighting
