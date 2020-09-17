@@ -24,6 +24,9 @@
 <div>
     {% for photo in sighting.photo_set.all %}
         <img class="responsive-img card-panel" src="{{photo.url}}">
+        <br>
+        <a href="{% url 'photos_delete' sighting.id photo.id %}">DELETE PHOTO</a>
+
     {% empty %}
         <div class="card-panel teal-text center-align">No Photos Uploaded</div>
     {% endfor %}
