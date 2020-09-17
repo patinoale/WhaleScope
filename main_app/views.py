@@ -9,10 +9,6 @@ from django.contrib.auth.forms import UserCreationForm
 import uuid
 import boto3
 import os
-import environ
-
-environ.Env()
-environ.Env.read_env()
 
 # constants for AWS S3 photos
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
@@ -41,9 +37,9 @@ def add_photo(request, sighting_id):
     return redirect('detail', pk=sighting_id)
 
 def map(request):
-    return render(request, 'main_app/sighting_map.html', context={'GOOGLE_API_KEY': os.environ['GOOGLE_API_KEY']})
-
-
+    # GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
+    sightings = Sighting.objects.all()
+    return render(request, 'main_app/sighting_map.html', {'sightings': sightings})
 
 class SightingList(ListView):
     model = Sighting

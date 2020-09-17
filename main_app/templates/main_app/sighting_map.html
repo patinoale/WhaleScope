@@ -20,14 +20,15 @@
         // New map
         var map = new google.maps.Map(document.getElementById('map'), options);
         
-        /*
+        
         // Listen for click on map
         google.maps.event.addListener(map, 'click',
         function(event){
             // Add marker
             addMarker({coords: event.latLng});
+            console.log(event.latLng.toString())
         });
-        */
+        
 
         // Array of sighting markers
         var markers = [
@@ -44,7 +45,7 @@
         ]
 
         // Loop through markers
-        for(var i=0; i<markers.length; i++){
+        for(var i=0; i < markers.length; i++){
             addMarker(markers[i]);
         }
 
@@ -77,7 +78,7 @@
     }
 </script>
 <script defer
-    src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvpsQ28JANinTPRU3S-Zw3b8eBkLlIGmU&callback=initMap">
 </script>
 
 {% endblock %}
