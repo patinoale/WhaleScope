@@ -8,6 +8,11 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 import uuid
 import boto3
+import os
+import environ
+
+environ.Env()
+environ.Env.read_env()
 
 # constants for AWS S3 photos
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
@@ -34,6 +39,9 @@ def add_photo(request, sighting_id):
         except:
             print('An error occurred uploading file to S3')
     return redirect('detail', pk=sighting_id)
+
+def map(request):
+    return render(request, 'main_app/sighting_map.html', context={'GOOGLE_API_KEY': os.environ['GOOGLE_API_KEY']})
 
 
 
