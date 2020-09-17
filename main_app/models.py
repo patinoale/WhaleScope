@@ -17,10 +17,9 @@ WHALE_SPECIES = (
 class Sighting(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField('sighting date')
-    location = models.CharField(max_length=100) # Need to determine how to handle this long-term
+    location = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # Need to add a species field with choices
     species = models.CharField(
         max_length=1,
         choices=WHALE_SPECIES,
