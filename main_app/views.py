@@ -35,6 +35,8 @@ def add_photo(request, sighting_id):
             print('An error occurred uploading file to S3')
     return redirect('detail', pk=sighting_id)
 
+
+
 class SightingList(ListView):
     model = Sighting
 
@@ -108,6 +110,14 @@ def comments_update(request, pk, comment_id):
 def comments_delete(request, sighting_id, comment_id):
     context={}
     obj = get_object_or_404(Comment, id=comment_id)
+
+    if request.method == 'GET':
+        obj.delete()
+        return redirect('detail', sighting_id)
+
+def photos_delete(request, sighting_id, photo_id):
+    context={}
+    obj = get_object_or_404(Photo, id=photo_id)
 
     if request.method == 'GET':
         obj.delete()
