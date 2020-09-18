@@ -36,23 +36,6 @@
         //     addMarker({coords: event.latLng});
         //     console.log(event.latLng.toString())
         // });
-        
-
-        // Array of sighting markers
-        // var markers = [
-        //     {
-        //     coords:{lat:34.0522,lng:-118.2437},
-        //     iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-        //     content:'<h4>Whale Sighting Info here</h4>'
-        //     },
-        //     {
-        //     coords:{lat:34.0259,lng:-118.7798},
-        //     iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-        //     content:'<h4>Whale Sighting Info here</h4>'
-        //     }
-        // ]
-
-        // Import array of sighting markers
 
         // Loop through sightings and make markers
         for(var i=0; i < sightings_list.length; i++){
@@ -69,23 +52,17 @@
             // icon: props.iconImage
         });
 
-        // Check for custom icon
-        // if(props.iconImage){
-        //     // Set icon image
-        //     marker.setIcon(props.iconImage);
-        // }
-
         // Check content
-        // if(props.title){
-        //     var infoWindow = new google.maps.InfoWindow({
-        //     content: <h4> props.title </h4>
-        // });
+        if(props.title){
+            var cStr = '<h4>' + String(props.title) + '<h4>'
+            var infoWindow = new google.maps.InfoWindow({
+            content: cStr
+        });
 
-        // marker.addListener('click', function(){
-        //     infoWindow.open(map, marker);
-        // });
-        // }
-
+        marker.addListener('click', function(){
+            infoWindow.open(map, marker);
+        });
+        }
         }
     }
 </script>
