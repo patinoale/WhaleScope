@@ -24,7 +24,6 @@
       setDefaultDate: true,
       autoClose: true
     });
-  
     var selectEl = document.getElementById('id_species');
     M.FormSelect.init(selectEl);
 </script>
@@ -46,43 +45,32 @@
 
 <script>
     let map, infoWindowLatLng;
-
     let myLatLng = {lat:34.0522,lng:-118.2437};
-    
     function initMap(){
-        // Map options
         var options = {
             zoom: 8,
             center: myLatLng
         };
         
-        // New map
         map = new google.maps.Map(document.getElementById('map'), options);
-    
         infoWindow = new google.maps.InfoWindow();
 
-        // Create initial InfoWindow for Lat/Lng
         infoWindowLatLng = new google.maps.InfoWindow(
             {content: 'Click the map to get Lat/Lng!', position: myLatLng}
         );
 
         infoWindowLatLng.open(map);
 
-        // Configure the click listener
         map.addListener('click', function(event) {
-            // Close the current InfoWindow for Lat/Lng
             infoWindowLatLng.close()
-            // Create a new InfoWindow for Lat/Lng
             infoWindowLatLng = new google.maps.InfoWindow({position: event.latLng});
             var latLngStr = event.latLng.toString()
             infoWindowLatLng.setContent(latLngStr);
             infoWindowLatLng.open(map);
-            // Convert Lat/Lng to strings
             newLaLn = latLngStr.replace('(','').replace(')','')
             arrLaLn = newLaLn.split(',')
             sLat = parseFloat(arrLaLn[0]).toFixed(9)
             sLng = parseFloat(arrLaLn[1]).toFixed(9)
-            // Place in correct field values
             document.getElementById("id_latitude").value = sLat
             document.getElementById("id_longitude").value = sLng
         });
@@ -91,7 +79,6 @@
         document.getElementById("submit").addEventListener("click", () => {
             geocodeAddress(geocoder, map);
         });
-    
     }  
     
     function geocodeAddress(geocoder, resultsMap) {

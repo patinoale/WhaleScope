@@ -27,18 +27,14 @@
     let map, infoWindow;
 
     function initMap(){
-        // Map options
         var options = {
             zoom:8,
             center:{lat:34.0522,lng:-118.2437}
         };
         
-        // New map
         map = new google.maps.Map(document.getElementById('map'), options);
-
         infoWindow = new google.maps.InfoWindow();
 
-        // Try HTML5 geolocation
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 position => {
@@ -56,7 +52,6 @@
                 }
             );
         } else {
-            // Browser doesn't support Geolocation
             handleLocationError(false, infoWindow, map.getCenter());
         }
 
@@ -65,12 +60,10 @@
             geocodeAddress(geocoder, map);
         });
 
-        // Loop through sightings and make markers
         for(var i=0; i < sightings_list.length; i++){
             addMarker(sightings_list[i]);
         }
 
-        // Add Marker Function
         function addMarker(props){
             var x = parseFloat(props.lat)
             var y = parseFloat(props.lng)
@@ -79,7 +72,6 @@
             map: map,
         });
 
-        // Check content
         if(props.title){
             var cStr = '<h4>' + String(props.title) + '<h4>'
             var infoWindowSighting = new google.maps.InfoWindow({

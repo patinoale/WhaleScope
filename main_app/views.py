@@ -11,15 +11,12 @@ import boto3
 import os
 import json
 import environ
-# environ.Env()
-# environ.Env.read_env()
 from django.conf import settings
 print(settings.GOOGLE_API_KEY)
 
 # constants for AWS S3 photos
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 BUCKET = 'whalescope'
-
 
 # Create views below:
 def home(request):
