@@ -9,6 +9,13 @@
     }
 </style>
 <div id="map"></div>
+
+<script>
+    {% autoescape off %}
+    var sightings_list = {{ sightings }}
+    {% endautoescape %}
+</script>
+
 <script>
     function initMap(){
         // Map options
@@ -19,60 +26,65 @@
         
         // New map
         var map = new google.maps.Map(document.getElementById('map'), options);
-        
-        
+
+        console.log(sightings_list)
+
         // Listen for click on map
-        google.maps.event.addListener(map, 'click',
-        function(event){
-            // Add marker
-            addMarker({coords: event.latLng});
-            console.log(event.latLng.toString())
-        });
+        // google.maps.event.addListener(map, 'click',
+        // function(event){
+        //     // Add marker
+        //     addMarker({coords: event.latLng});
+        //     console.log(event.latLng.toString())
+        // });
         
 
         // Array of sighting markers
-        var markers = [
-            {
-            coords:{lat:34.0522,lng:-118.2437},
-            iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-            content:'<h4>Whale Sighting Info here</h4>'
-            },
-            {
-            coords:{lat:34.0259,lng:-118.7798},
-            iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-            content:'<h4>Whale Sighting Info here</h4>'
-            }
-        ]
+        // var markers = [
+        //     {
+        //     coords:{lat:34.0522,lng:-118.2437},
+        //     iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        //     content:'<h4>Whale Sighting Info here</h4>'
+        //     },
+        //     {
+        //     coords:{lat:34.0259,lng:-118.7798},
+        //     iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        //     content:'<h4>Whale Sighting Info here</h4>'
+        //     }
+        // ]
 
-        // Loop through markers
-        for(var i=0; i < markers.length; i++){
-            addMarker(markers[i]);
+        // Import array of sighting markers
+
+        // Loop through sightings and make markers
+        for(var i=0; i < sightings_list.length; i++){
+            addMarker(sightings_list[i]);
         }
 
         // Add Marker Function
         function addMarker(props){
+            var x = parseFloat(props.lat)
+            var y = parseFloat(props.lng)
             var marker = new google.maps.Marker({
-            position: props.coords,
+            position: { lat: x, lng: y },
             map: map,
             // icon: props.iconImage
         });
 
         // Check for custom icon
-        if(props.iconImage){
-            // Set icon image
-            marker.setIcon(props.iconImage);
-        }
+        // if(props.iconImage){
+        //     // Set icon image
+        //     marker.setIcon(props.iconImage);
+        // }
 
         // Check content
-        if(props.content){
-            var infoWindow = new google.maps.InfoWindow({
-            content: props.content
-        });
+        // if(props.title){
+        //     var infoWindow = new google.maps.InfoWindow({
+        //     content: <h4> props.title </h4>
+        // });
 
-        marker.addListener('click', function(){
-            infoWindow.open(map, marker);
-        });
-        }
+        // marker.addListener('click', function(){
+        //     infoWindow.open(map, marker);
+        // });
+        // }
 
         }
     }

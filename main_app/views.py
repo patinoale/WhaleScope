@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 import uuid
 import boto3
 import os
+import json
 
 # constants for AWS S3 photos
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
@@ -38,8 +39,21 @@ def add_photo(request, sighting_id):
 
 def map(request):
     # GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
-    sightings = Sighting.objects.all()
-    return render(request, 'main_app/sighting_map.html', {'sightings': sightings})
+    user_sightings = Sighting.objects.all()
+    sighting_list = []
+    for s in user_sightings:
+        new_sighting = {
+            'id': s.id,
+            'title': s.title,
+            'species': s.species,
+            'lat': str(s.latitude),
+            'lng': str(s.longitude)
+        }
+        sighting_list.append(new_sighting)
+
+    return render(request, 'main_app/sighting_map.html', context = {
+        'sightings': json.dumps(sighting_list)
+    })
 
 class SightingList(ListView):
     model = Sighting
