@@ -74,8 +74,17 @@
             infoWindowLatLng.close()
             // Create a new InfoWindow for Lat/Lng
             infoWindowLatLng = new google.maps.InfoWindow({position: event.latLng});
-            infoWindowLatLng.setContent(event.latLng.toString());
+            var latLngStr = event.latLng.toString()
+            infoWindowLatLng.setContent(latLngStr);
             infoWindowLatLng.open(map);
+            // Convert Lat/Lng to strings
+            newLaLn = latLngStr.replace('(','').replace(')','')
+            arrLaLn = newLaLn.split(',')
+            sLat = parseFloat(arrLaLn[0]).toFixed(9)
+            sLng = parseFloat(arrLaLn[1]).toFixed(9)
+            // Place in correct field values
+            document.getElementById("id_latitude").value = sLat
+            document.getElementById("id_longitude").value = sLng
         });
     
         const geocoder = new google.maps.Geocoder();

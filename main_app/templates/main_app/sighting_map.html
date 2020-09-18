@@ -65,14 +65,6 @@
             geocodeAddress(geocoder, map);
         });
 
-        // Listen for click on map
-        // google.maps.event.addListener(map, 'click',
-        // function(event){
-        //     // Add marker
-        //     addMarker({coords: event.latLng});
-        //     console.log(event.latLng.toString())
-        // });
-
         // Loop through sightings and make markers
         for(var i=0; i < sightings_list.length; i++){
             addMarker(sightings_list[i]);
