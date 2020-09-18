@@ -11,9 +11,11 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="{% static 'js/script.js'%}"></script>
+  <script defer
+    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&callback=initMap">
+  </script>
 </head>
 <body>
-
 
   <div class="navbar">
     <a id="home-logo-link" href="{% url 'home' %}"><img id="logo-image" src="https://i.imgur.com/AzyIR4f.png" alt="Whale Scope logo"></a>
@@ -22,6 +24,7 @@
     {% if user.is_authenticated %}
     <a href="{% url 'logout' %}">Log Out</a>
     <a href="{% url 'sightings_create' %}">Add A Sighting</a>
+    <a href="{% url 'map' %}">Sightings Map</a>
       <a href="{% url 'index' %}">My Sightings (Profile)</a>
     {% else %}
       <a href="{% url 'signup' %}">Sign Up</a>

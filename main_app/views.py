@@ -8,11 +8,15 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 import uuid
 import boto3
+import os
+import json
+import environ
+from django.conf import settings
+print(settings.GOOGLE_API_KEY)
 
 # constants for AWS S3 photos
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 BUCKET = 'whalescope'
-
 
 # Create views below:
 def home(request):
@@ -35,8 +39,6 @@ def add_photo(request, sighting_id):
             print('An error occurred uploading file to S3')
     return redirect('detail', pk=sighting_id)
 
-
-
 class SightingList(ListView):
     model = Sighting
 
@@ -50,7 +52,7 @@ class SightingDetail(DetailView):
 
 class SightingCreate(CreateView):
     model = Sighting
-    fields = ['title', 'date', 'location', 'description', 'species']
+    fields = ['title', 'date', 'latitude', 'longitude', 'description', 'species']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -58,7 +60,7 @@ class SightingCreate(CreateView):
 
 class SightingUpdate(UpdateView):
     model = Sighting
-    fields = ['date', 'location', 'description', 'species']
+    fields = ['date', 'latitude', 'longitude', 'description', 'species']
 
 class SightingDelete(DeleteView):
     model = Sighting
@@ -122,3 +124,22 @@ def photos_delete(request, sighting_id, photo_id):
     if request.method == 'GET':
         obj.delete()
         return redirect('detail', sighting_id)
+
+def map(request):
+    user_sightings = Sighting.objects.all()
+    sighting_list = []
+    for s in user_sightings:
+        new_sighting = {
+            'id': s.id,
+            'title': s.title,
+            'species': s.species,
+            'lat': str(s.latitude),
+            'lng': str(s.longitude)
+        }
+        sighting_list.append(new_sighting)
+
+    return render(request, 'main_app/sighting_map.html', {
+        'sightings': json.dumps(sighting_list),
+        'GOOGLE_API_KEY': settings.GOOGLE_API_KEY
+    })
+
