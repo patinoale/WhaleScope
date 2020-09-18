@@ -54,7 +54,7 @@ class SightingDetail(DetailView):
 
 class SightingCreate(CreateView):
     model = Sighting
-    fields = ['title', 'date', 'location', 'description', 'species']
+    fields = ['title', 'date', 'latitude', 'longitude', 'description', 'species']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -62,7 +62,7 @@ class SightingCreate(CreateView):
 
 class SightingUpdate(UpdateView):
     model = Sighting
-    fields = ['date', 'location', 'description', 'species']
+    fields = ['date', 'latitude', 'longitude', 'description', 'species']
 
 class SightingDelete(DeleteView):
     model = Sighting

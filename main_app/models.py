@@ -17,7 +17,8 @@ WHALE_SPECIES = (
 class Sighting(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField('sighting date')
-    location = models.CharField(max_length=100)
+    latitude = models.DecimalField(max_digits=12, decimal_places=9)
+    longitude = models.DecimalField(max_digits=12, decimal_places=9)
     description = models.TextField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     species = models.CharField(
