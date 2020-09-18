@@ -10,6 +10,11 @@ import uuid
 import boto3
 import os
 import json
+import environ
+# environ.Env()
+# environ.Env.read_env()
+from django.conf import settings
+print(settings.GOOGLE_API_KEY)
 
 # constants for AWS S3 photos
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
@@ -124,7 +129,6 @@ def photos_delete(request, sighting_id, photo_id):
         return redirect('detail', sighting_id)
 
 def map(request):
-    # GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
     user_sightings = Sighting.objects.all()
     sighting_list = []
     for s in user_sightings:
@@ -137,7 +141,8 @@ def map(request):
         }
         sighting_list.append(new_sighting)
 
-    return render(request, 'main_app/sighting_map.html', context = {
-        'sightings': json.dumps(sighting_list)
+    return render(request, 'main_app/sighting_map.html', {
+        'sightings': json.dumps(sighting_list),
+        'GOOGLE_API_KEY': settings.GOOGLE_API_KEY
     })
 
