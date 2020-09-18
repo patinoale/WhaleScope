@@ -1,27 +1,75 @@
+body {
+  text-align: center;
+  /* background: url(https://i.imgur.com/OjCfK3s.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; */
+  margin: 0;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Rajdhani', sans-serif;
+}
 
-.nav-bar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
-    color: orange;
-  }
 
 
-  h1 {
-    color: yellow;
-  }
+.navbar {
+  overflow: hidden;
+  background-color: #27264027;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  border-bottom: 1px;
+  border-color: white;
+}
 
-  body {
-    background-color: orangered;
-  }
+.navbar a {
+  float: right;
+  display: block;
+  color: #ffffff;
+  text-align: center;
+  padding: 17px 16px;
+  text-decoration: none;
+  font-size: 17px;
 
+}
+
+#logo-image {
+  height: 50px;
+  width: 50px;
+}
+
+#home-logo-link {
+  float: left;
+  padding: 7px 25px;
+}
+
+#home-logo {
+  height: 150px;
+  width: 400px;
+  margin-right: 30rem;
+}
+
+
+.navbar a:hover {
+  background: #c0fdff;
+  color: black;
+}
+
+#home-logo-link a:hover {
+  background: black;
+}
+
+main {
+  padding: 16px;
+  margin-top: 30px;
+
+} 
+
+footer {
+  padding-top: 0;
+  text-align: right;
+}
   
-  footer {
-    padding-top: 0;
-    text-align: right;
-  }
-  
+
+
 
