@@ -23,6 +23,7 @@
         </ul>
         <ul class="right">
           <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'map' %}">Sightings Map</a></li>
           {% if user.is_authenticated %}
             <li><a href="{% url 'index' %}">My Sightings (Profile)</a></li>
             <li><a href="{% url 'sightings_create' %}">Add A Sighting</a></li>
