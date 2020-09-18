@@ -58,9 +58,19 @@ class SightingCreate(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['GOOGLE_API_KEY'] = settings.GOOGLE_API_KEY
+        return context
+
 class SightingUpdate(UpdateView):
     model = Sighting
     fields = ['date', 'latitude', 'longitude', 'description', 'species']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['GOOGLE_API_KEY'] = settings.GOOGLE_API_KEY
+        return context
 
 class SightingDelete(DeleteView):
     model = Sighting
