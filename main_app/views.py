@@ -37,24 +37,6 @@ def add_photo(request, sighting_id):
             print('An error occurred uploading file to S3')
     return redirect('detail', pk=sighting_id)
 
-def map(request):
-    # GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
-    user_sightings = Sighting.objects.all()
-    sighting_list = []
-    for s in user_sightings:
-        new_sighting = {
-            'id': s.id,
-            'title': s.title,
-            'species': s.species,
-            'lat': str(s.latitude),
-            'lng': str(s.longitude)
-        }
-        sighting_list.append(new_sighting)
-
-    return render(request, 'main_app/sighting_map.html', context = {
-        'sightings': json.dumps(sighting_list)
-    })
-
 class SightingList(ListView):
     model = Sighting
 
@@ -140,3 +122,22 @@ def photos_delete(request, sighting_id, photo_id):
     if request.method == 'GET':
         obj.delete()
         return redirect('detail', sighting_id)
+
+def map(request):
+    # GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
+    user_sightings = Sighting.objects.all()
+    sighting_list = []
+    for s in user_sightings:
+        new_sighting = {
+            'id': s.id,
+            'title': s.title,
+            'species': s.species,
+            'lat': str(s.latitude),
+            'lng': str(s.longitude)
+        }
+        sighting_list.append(new_sighting)
+
+    return render(request, 'main_app/sighting_map.html', context = {
+        'sightings': json.dumps(sighting_list)
+    })
+
