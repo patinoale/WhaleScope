@@ -6,3 +6,4 @@ $(".edit_button").click(function() {
     $(`#edit_field_${id}`).toggle();
     });
 });
+
