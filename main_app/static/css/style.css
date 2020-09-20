@@ -1,20 +1,18 @@
 body {
   text-align: center;
-  /* background: url(https://i.imgur.com/OjCfK3s.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
+  background: url(https://i.imgur.com/uQJhqAr.jpg) no-repeat center center fixed; 
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover; */
+  background-size: cover;
   margin: 0;
-  font-family: 'Open Sans Condensed', sans-serif;
   font-family: 'Rajdhani', sans-serif;
+  color: white;
 }
-
-
 
 .navbar {
   overflow: hidden;
-  background-color: #27264027;
+  background-color: #27264000;
   position: fixed;
   top: 0;
   width: 100%;
@@ -30,7 +28,7 @@ body {
   padding: 17px 16px;
   text-decoration: none;
   font-size: 17px;
-
+  transition: 250ms background ease-in;
 }
 
 #logo-image {
@@ -40,36 +38,147 @@ body {
 
 #home-logo-link {
   float: left;
-  padding: 7px 25px;
+  padding: 5px 25px 0px 25px;
 }
 
 #home-logo {
   height: 150px;
   width: 400px;
-  margin-right: 30rem;
+  margin-top: 3.5rem;
+  margin-right: 20rem;
 }
-
 
 .navbar a:hover {
   background: #c0fdff;
   color: black;
 }
 
-#home-logo-link a:hover {
-  background: black;
+#home-logo-link:hover {
+  background: rgb(49, 98, 119);
+  background-image: url(https://i.imgur.com/QLa6Vjy.png);
 }
-
-main {
-  padding: 16px;
-  margin-top: 30px;
-
-} 
 
 footer {
-  padding-top: 0;
+  position: fixed;
+  left: 0;
+  bottom: 5px;
+  width: 100%;
+  background-color: #27264000;
+  color: white;
   text-align: right;
 }
+
+#slogan {
+  margin: 0rem;
+  color: white;
+  margin-right: 20rem;
+  margin-top: 0rem;
+  padding-top: 0rem;
+  font-size: 20px;
+}
+
+.home-link-container {
+  margin-top: 1.5rem;
+  color: white;
+  margin-right: 20rem;
+  font-size: 40px;
+}
+
+.home-login-signup {
+  border: 2px solid white;
+  color: white;
+  display: inline-block;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 6rem; 
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.home-login-signup:hover {
+  background: #c0fdff;
+  color: black;
+}
+
+.home-my-sightings {
+  border: 2px solid white;
+  color: white;
+  display: inline-block;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 6.5em; 
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.home-my-sightings:hover {
+  background: #c0fdff;
+  color: black;
+}
   
+.login-form {
+  background: rgb(1, 15, 30);
+  box-shadow: 0 0 1rem #c0fdff;
+  height: 350px;
+  margin-top: 8rem;
+  margin-left: 30rem;
+  width: 370px;
+  padding: 3rem;
+}
+
+.login-username, .login-password {
+  background: white;
+  border: 0 solid;
+  border-bottom: 1px solid rgba(white, .5);
+  color: rgb(20, 19, 19);
+  display: block;
+  margin: 1rem;
+  padding: .5rem;
+  transition: 250ms background ease-in;
+  width: 20rem;
+  height: 1.5rem;
+  font-size: 20px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.login-submit {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  display: block;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 8rem;
+  height: 2.5rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 25px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.login-submit:hover {
+  background: #c0fdff;
+  color: black;
+}
+
+#login-letter-logo {
+  width: 300px;
+  height: 95px;
+}
+
+#login-logo {
+  width: 75px;
+  height: 75px;
+}
 
 
 
