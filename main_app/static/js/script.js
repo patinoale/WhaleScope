@@ -7,14 +7,14 @@ $(".edit_button").click(function() {
     });
 });
 
-$(document).ready(function(){
-    $('.likes').css('color', 'grey');
+// $(document).ready(function(){
+//     $('.likes').css('color', 'lightgrey');
 
-$('.likes').click(function(){
+// $('.likes').click(function(){
     
-    $('#likes').toggleClass('clicked');
-})
-})
+//     $('#likes').toggleClass('clicked');
+// })
+// })
 
 twttr.widgets.createTimeline(
     {

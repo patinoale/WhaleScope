@@ -17,12 +17,25 @@
             <div class="card-action" style="display:inline-flex; width:100%">
                 <a href="{% url 'sightings_update' object.id %}">Edit</a>
                 <a href="{% url 'sightings_delete' object.id %}">Delete</a>
-                 <button style="background-color:transparent; border: none;"><i id="likes" class="material-icons likes">thumb_up</i>
-                </button>
-            <p><small>{} likes</small></p>
+                 <form action="{% url 'like_sighting' object.id %}" method="post">
+                    {% csrf_token %} 
+                    <button type="submit" name="sighting_id" style="background-color:transparent; border: none;">
+                        {% if liked_it %}
+                        <i style="color: #C0FDFF" class='material-icons likes'>thumb_up</i>
+                        {% else %}
+                        <i style="color: lightgrey" class='material-icons likes'>thumb_up</i>
+                        {% endif %}
+                        {% if total_likes %}
+                        <p style="margin-top: 0;"><small>{{ total_likes }} Likes</small></p>
+                        {% else %}
+                        {% endif %} 
+                    </button>
+                </form>
+                
+
             </div>
         </div>
-    </div>
+    </div> 
 </div>
 <hr>
 <div>

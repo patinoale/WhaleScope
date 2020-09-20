@@ -16,4 +16,6 @@ urlpatterns = [
     path('sightings/<int:sighting_id>/add_photo/', views.add_photo, name='add_photo'),
     path('sightings/<int:sighting_id>/<int:photo_id>/photos_delete/', views.photos_delete, name='photos_delete'),
     path('map/', views.map, name='map'),
+    path('like/<int:pk>/', views.like_sighting, name='like_sighting'),
+    ### path('like/<int:pk>/', views.unlike_sighting, name='unlike_sighting'),
 ]

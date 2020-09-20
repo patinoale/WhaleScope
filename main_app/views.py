@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, reverse, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -53,9 +54,17 @@ class SightingList(ListView):
 class SightingDetail(DetailView):
     model = Sighting
     
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
+        liked = get_object_or_404(Sighting, id=self.kwargs['pk'])
+        total_likes = liked.total_likes()
+        liked_it = False
+        if liked.likes.filter(id=self.request.user.id).exists():
+            liked_it = True
+
         context['comment_form'] = CommentForm()
+        context['total_likes'] = total_likes
+        context['liked_it'] = liked_it
         return context
 
 class SightingCreate(CreateView):
@@ -136,7 +145,6 @@ def comments_delete(request, sighting_id, comment_id):
         return redirect('detail', sighting_id)
 
 
-
 def map(request):
     user_sightings = Sighting.objects.all()
     sighting_list = []
@@ -155,3 +163,13 @@ def map(request):
         'GOOGLE_API_KEY': settings.GOOGLE_API_KEY
     })
 
+def like_sighting(request, pk):
+    sighting = get_object_or_404(Sighting, pk=pk)
+    liked_it = False
+    if sighting.likes.filter(id=request.user.id).exists():
+        sighting.likes.remove(request.user)
+        liked_it = False
+    else:
+        sighting.likes.add(request.user)
+        liked_it = True
+    return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
