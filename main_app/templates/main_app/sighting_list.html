@@ -1,24 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 
+
 <h1>Profile: My Sightings Index</h1>
-
-<iframe src="https://www.underwatertimes.com/" width="30%" height="100%" name="iframe">
-  <p>iframes are not supported by your browser</p></iframe>
-
-{% for object in object_list %}
-  <div class="card">
+<div class="col s3 left vertical" id="twitter">
+    
+</div>
+<!-- <div class="col s9 left"> -->
+  {% for object in object_list %}
+  <div class="card col s9 right width=100%">
     <a href="{% url 'detail' object.id %}">
-        <div class="card-content">
-          <span class="card-title">{{ object.title }}</span>
-          <p>Date: {{ object.date }}</p>
-          <p>Latitude: {{ object.latitude }}</p>
-          <p>Longitude: {{ object.longitude }}</p>
-          <p>Description: {{ object.description }}</p>
-          <p>Species: {{ object.get_species_display }}</p>
-        </div>
+      <div class="card-content">
+        <span class="card-title">{{ object.title }}</span>
+        <p>Date: {{ object.date }}</p>
+        <p>Latitude: {{ object.latitude }}</p>
+        <p>Longitude: {{ object.longitude }}</p>
+        <p>Description: {{ object.description }}</p>
+        <p>Species: {{ object.get_species_display }}</p>
+      </div>
     </a>
   </div>
+<!-- </div> -->
+
 {% endfor %}
 
 {% endblock %}

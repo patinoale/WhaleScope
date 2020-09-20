@@ -14,9 +14,12 @@
         <p>Description: {{ object.description }}</p>
         <p>Species: {{ object.get_species_display }}</p>
             </div>
-            <div class="card-action">
+            <div class="card-action" style="display:inline-flex; width:100%">
                 <a href="{% url 'sightings_update' object.id %}">Edit</a>
                 <a href="{% url 'sightings_delete' object.id %}">Delete</a>
+                 <button style="background-color:transparent; border: none;"><i id="likes" class="material-icons likes">thumb_up</i>
+                </button>
+            <p><small>{} likes</small></p>
             </div>
         </div>
     </div>
@@ -58,6 +61,8 @@
                                 <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
                             <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
                     </div>
+                    
+
                         <div id="edit_field_{{ comment.id }}" class="edit_field">
                             <form  action="{% url 'comments_update' object.id comment.id %}" method="post">
                                 {% csrf_token %}
