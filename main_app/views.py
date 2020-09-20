@@ -56,15 +56,23 @@ class SightingDetail(DetailView):
     
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
+
         liked = get_object_or_404(Sighting, id=self.kwargs['pk'])
         total_likes = liked.total_likes()
         liked_it = False
         if liked.likes.filter(id=self.request.user.id).exists():
             liked_it = True
 
+        liked_comment = get_object_or_404(Sighting, id=self.kwargs['pk'])
+        has_likes = liked_comment.has_likes()
+        like = False
+        if liked_comment.likes.filter(id=self.request.user.id).exists():
+            like - False
+
         context['comment_form'] = CommentForm()
         context['total_likes'] = total_likes
         context['liked_it'] = liked_it
+        context['like'] = like
         return context
 
 class SightingCreate(CreateView):
@@ -172,4 +180,15 @@ def like_sighting(request, pk):
     else:
         sighting.likes.add(request.user)
         liked_it = True
+    return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
+
+def like_comment(request, pk, comment_id):
+    sighting = get_object_or_404(Sighting, pk=pk)
+    like = False
+    if comment.likes.filter(id=request.user.id).exists():
+        comment.likes.remove(request.user)
+        like = False
+    else:
+        comment.likes.add(request.user)
+        like = True
     return HttpResponseRedirect(reverse('detail', args=[str(pk)]))

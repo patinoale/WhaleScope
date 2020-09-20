@@ -38,7 +38,7 @@ class Sighting(models.Model):
         return self.comment_set
 
     def has_likes(self):
-        return self.likes_set
+        return self.likes.count()
 
     def total_likes(self):
         return self.likes.count()
@@ -58,7 +58,7 @@ class Comment(models.Model):
         return reverse('detail', kwargs={'pk': self.id})
 
     def has_likes(self):
-        return self.likes_set
+        return self.likes.count()
 
     class Meta:
         ordering = ['-created_date']

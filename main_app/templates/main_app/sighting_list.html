@@ -17,6 +17,7 @@
         <p>Longitude: {{ object.longitude }}</p>
         <p>Description: {{ object.description }}</p>
         <p>Species: {{ object.get_species_display }}</p>
+        <p class="right"><small>{{ object.likes.count }} comments</small></p>
       </div>
     </a>
   </div>

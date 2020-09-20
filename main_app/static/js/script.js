@@ -7,15 +7,6 @@ $(".edit_button").click(function() {
     });
 });
 
-// $(document).ready(function(){
-//     $('.likes').css('color', 'lightgrey');
-
-// $('.likes').click(function(){
-    
-//     $('#likes').toggleClass('clicked');
-// })
-// })
-
 twttr.widgets.createTimeline(
     {
       sourceType: "list",
@@ -24,5 +15,3 @@ twttr.widgets.createTimeline(
     },
     document.getElementById("twitter")
   );
-
-//   #C0FDFF `#likes_${likeid}` const likeid = $(this)['0'].likeid.split('_')[2]
