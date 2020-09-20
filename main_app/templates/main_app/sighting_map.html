@@ -25,6 +25,7 @@
 <script>
 
     let map, infoWindow;
+    let activeInfoWindow = null;
 
     function initMap(){
         var options = {
@@ -79,7 +80,9 @@
         });
 
         marker.addListener('click', function(){
+            if (activeInfoWindow != null) { activeInfoWindow.close(); }
             infoWindowSighting.open(map, marker);
+            activeInfoWindow = infoWindowSighting;
         });
         }
         }
