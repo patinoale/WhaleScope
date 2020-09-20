@@ -19,6 +19,7 @@ class Sighting(models.Model):
     date = models.DateField('sighting date')
     latitude = models.DecimalField(max_digits=12, decimal_places=9)
     longitude = models.DecimalField(max_digits=12, decimal_places=9)
+    location = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     species = models.CharField(
