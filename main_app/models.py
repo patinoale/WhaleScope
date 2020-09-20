@@ -26,6 +26,7 @@ class Sighting(models.Model):
         choices=WHALE_SPECIES,
         default=WHALE_SPECIES[0][0]
     )
+    likes = models.ManyToManyField(User, related_name='sighting_likes', blank=True)
 
     def __str__(self):
         return self.title
@@ -36,18 +37,28 @@ class Sighting(models.Model):
     def has_comments(self):
         return self.comment_set
 
+    def has_likes(self):
+        return self.likes_set
+
+    def total_likes(self):
+        return self.likes.count()
+
 class Comment(models.Model):
     text = models.TextField('comment', max_length=1000)
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     sighting = models.ForeignKey(Sighting, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    reply = models.ForeignKey('comment', null=True, related_name='replies', on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, related_name='comment_likes', blank=True)
 
     def __str__(self):
         return str(self.text)
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pk': self.id})
+
+    def has_likes(self):
+        return self.likes_set
 
     class Meta:
         ordering = ['-created_date']
@@ -58,4 +69,10 @@ class Photo(models.Model):
 
     def __str__(self):
         return f"Photo for sighting_id: {self.sighting_id} @{self.url}"
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Profile of user {self.user.username}"
 
