@@ -28,7 +28,7 @@
     M.FormSelect.init(selectEl);
 </script>
 
-<h1>Find Latitude & Longitude Below:</h1>
+<h3>Click the map below for latitude & longitude:</h3>
 <style>
     #map {
         height:400px;
@@ -37,7 +37,7 @@
 </style>
 
 <div id="floating-panel">
-    <input id="address" type="textbox" value="Enter Your Location" />
+    <input id="address" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
     <input id="submit" type ="button" value="Search" />
 </div>
 
@@ -55,8 +55,28 @@
         map = new google.maps.Map(document.getElementById('map'), options);
         infoWindow = new google.maps.InfoWindow();
 
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const myLatLng = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    infoWindow.setPosition(myLatLng);
+                    infoWindow.setContent("Location found. Click the map to get Lat/Lng!");
+                    infoWindow.open(map)
+                    map.setCenter(myLatLng);
+                },
+                () => {
+                    handleLocationError(true, infowWindow, map.getCenter());
+                }
+            );
+        } else {
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+
         infoWindowLatLng = new google.maps.InfoWindow(
-            {content: 'Click the map to get Lat/Lng!', position: myLatLng}
+            {content: "Click the map to get Lat/Lng!", position: myLatLng}
         );
 
         infoWindowLatLng.open(map);
@@ -73,6 +93,18 @@
             sLng = parseFloat(arrLaLn[1]).toFixed(9)
             document.getElementById("id_latitude").value = sLat
             document.getElementById("id_longitude").value = sLng
+
+            geocoder.geocode({
+                'latLng': event.latLng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var addStr = results[0].formatted_address;
+                        document.getElementById("id_location").value = addStr;
+                    }
+                }
+            });
+
         });
     
         const geocoder = new google.maps.Geocoder();
@@ -91,6 +123,9 @@
             }
         });
     }
+</script>
+<script defer
+    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&callback=initMap">
 </script>
 
 {% endblock %}
