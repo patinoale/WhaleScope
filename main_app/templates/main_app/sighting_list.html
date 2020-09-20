@@ -3,6 +3,9 @@
 
 <h1>Profile: My Sightings Index</h1>
 
+<iframe src="https://www.underwatertimes.com/" width="30%" height="100%" name="iframe">
+  <p>iframes are not supported by your browser</p></iframe>
+
 {% for object in object_list %}
   <div class="card">
     <a href="{% url 'detail' object.id %}">
