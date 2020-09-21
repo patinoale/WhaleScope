@@ -44,6 +44,16 @@
 </div>
 
 <script>
+    var input = document.getElementById("address");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("submit").click();
+        }
+    });
+</script>
+
+<script>
     let map, infoWindowLatLng;
     let myLatLng = {lat:34.0522,lng:-118.2437};
     function initMap(){
