@@ -138,13 +138,23 @@ def photos_delete(request, sighting_id, photo_id):
 def map(request):
     user_sightings = Sighting.objects.all()
     sighting_list = []
+
     for s in user_sightings:
+
+        s_photo = Photo.objects.filter(sighting_id=s.id).first()
+        
+        if s_photo == None:
+            s_url = "no_img_url"
+        else:
+            s_url = s_photo.url
+
         new_sighting = {
             'id': s.id,
             'title': s.title,
             'species': s.species,
             'lat': str(s.latitude),
-            'lng': str(s.longitude)
+            'lng': str(s.longitude),
+            'url': str(s_url)
         }
         sighting_list.append(new_sighting)
 
