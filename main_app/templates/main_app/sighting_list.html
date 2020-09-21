@@ -7,7 +7,7 @@
   <div class="card">
     <a href="{% url 'detail' object.id %}">
         <div class="card-content">
-          <img src="{{ object.photo }}" alt="">
+          <img src="https://i.imgur.com/QLa6Vjy.png" alt="">
           <span class="card-title">{{ object.title }}</span>
           <p>Date: {{ object.date }}</p>
           <p>Latitude: {{ object.latitude }}</p>
@@ -21,3 +21,21 @@
 {% endfor %}
 
 {% endblock %}
+
+<!-- 
+<h1>Profile: My Sightings Index</h1>
+
+{% for object in object_list %}
+  <div class="card">
+    <a href="{% url 'detail' object.id %}">
+        <div class="card-content">
+          <span class="card-title">{{ object.title }}</span>
+          <p>Date: {{ object.date }}</p>
+          <p>Latitude: {{ object.latitude }}</p>
+          <p>Longitude: {{ object.longitude }}</p>
+          <p>Location: {{ object.location }}</p>
+          <p>Description: {{ object.description }}</p>
+          <p>Species: {{ object.get_species_display }}</p>
+        </div>
+    </a>
+  </div> -->
