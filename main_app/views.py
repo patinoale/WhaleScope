@@ -58,10 +58,21 @@ class SightingDetail(LoginRequiredMixin, DetailView):
         if liked.likes.filter(id=self.request.user.id).exists():
             liked_it = True
 
+        comment = get_object_or_404(Comment, id=self.kwargs['comment_id'])
+        comment_likes = get_object_or_404(Comment, id=comment.kwargs['comment_id'])
+        has_likes = comment_likes.has_likes()
+        like = False
+        if comment_likes.likes.filter(id=comment.request.user.id).exists():
+            like = True
+
+
         context['comment_form'] = CommentForm()
         context['reply_form'] = ReplyForm()
         context['total_likes'] = total_likes
         context['liked_it'] = liked_it
+        context['has_likes'] = has_likes
+        context['like'] = like
+
         
         return context
 
@@ -191,6 +202,22 @@ def like_sighting(request, pk):
     else:
         sighting.likes.add(request.user)
         liked_it = True
+    return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
+
+
+@login_required
+def like_comment(request, pk, comment_id):
+    sighting = get_object_or_404(Sighting, pk=pk)
+    if request.method == 'POST':
+        if comment_id:
+            comment = get_object_or_404(Comment, id=comment_id)
+            like = False
+            if comment.likes.filter(id=request.user.id).exists():
+                comment.likes.remove(request.user)
+                like = False
+            else:
+                comment.likes.add(request.user)
+                like = True
     return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
 
 
