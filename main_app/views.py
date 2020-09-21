@@ -6,6 +6,8 @@ from .models import Sighting, Comment, Photo
 from .forms import *
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
 import os
@@ -25,6 +27,7 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def add_photo(request, sighting_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -39,10 +42,10 @@ def add_photo(request, sighting_id):
             print('An error occurred uploading file to S3')
     return redirect('detail', pk=sighting_id)
 
-class SightingList(ListView):
+class SightingList(LoginRequiredMixin, ListView):
     model = Sighting
 
-class SightingDetail(DetailView):
+class SightingDetail(LoginRequiredMixin, DetailView):
     model = Sighting
     
     def get_context_data(self, **kwargs):
@@ -50,7 +53,7 @@ class SightingDetail(DetailView):
         context['comment_form'] = CommentForm()
         return context
 
-class SightingCreate(CreateView):
+class SightingCreate(LoginRequiredMixin, CreateView):
     model = Sighting
     fields = ['title', 'date', 'latitude', 'longitude', 'location', 'description', 'species']
 
@@ -63,7 +66,7 @@ class SightingCreate(CreateView):
         context['GOOGLE_API_KEY'] = settings.GOOGLE_API_KEY
         return context
 
-class SightingUpdate(UpdateView):
+class SightingUpdate(LoginRequiredMixin, UpdateView):
     model = Sighting
     fields = ['date', 'latitude', 'longitude', 'location', 'description', 'species']
 
@@ -72,9 +75,10 @@ class SightingUpdate(UpdateView):
         context['GOOGLE_API_KEY'] = settings.GOOGLE_API_KEY
         return context
 
-class SightingDelete(DeleteView):
+class SightingDelete(LoginRequiredMixin, DeleteView):
     model = Sighting
     success_url = '/sightings/'
+
 
 def signup(request):
   error_message = ''
@@ -91,7 +95,7 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-
+@login_required
 def add_comment(request, pk):
     sighting = get_object_or_404(Sighting, pk=pk)
     if request.method == 'POST':
@@ -106,7 +110,7 @@ def add_comment(request, pk):
         form = CommentForm()
     return render(request, 'detail', {'form': form})
 
-
+@login_required
 def comments_update(request, pk, comment_id):
     sighting = get_object_or_404(Sighting, pk=pk)
     if request.method == 'POST':
@@ -118,7 +122,7 @@ def comments_update(request, pk, comment_id):
             form = CommentForm(data=request.POST)
         return redirect('detail', pk=sighting.pk)
 
-
+@login_required
 def comments_delete(request, sighting_id, comment_id):
     context={}
     obj = get_object_or_404(Comment, id=comment_id)
@@ -127,6 +131,7 @@ def comments_delete(request, sighting_id, comment_id):
         obj.delete()
         return redirect('detail', sighting_id)
 
+@login_required
 def photos_delete(request, sighting_id, photo_id):
     context={}
     obj = get_object_or_404(Photo, id=photo_id)
@@ -135,6 +140,7 @@ def photos_delete(request, sighting_id, photo_id):
         obj.delete()
         return redirect('detail', sighting_id)
 
+@login_required
 def map(request):
     user_sightings = Sighting.objects.all()
     sighting_list = []
