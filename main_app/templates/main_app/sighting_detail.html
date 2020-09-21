@@ -25,7 +25,7 @@
 <hr>
 <div>
     {% for photo in sighting.photo_set.all %}
-        <img class="responsive-img card-panel" src="{{photo.url}}">
+        <img class="whale-photo" src="{{photo.url}}">
         <br>
         <a href="{% url 'photos_delete' sighting.id photo.id %}">DELETE PHOTO</a>
     {% empty %}

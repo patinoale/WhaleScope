@@ -265,4 +265,24 @@ footer {
   color: black;
 }
 
+.card {
+  background-color: tomato;
+  display: inline-block;
+  width: 10rem;
+}
+
+.my-sightings-header {
+  font-size: 30px;
+  margin-top: 7rem;
+}
+
+.card-title {
+  text-decoration: none;
+}
+
+.whale-photo {
+  width: 10px;
+  height: 10px;
+}
+
 

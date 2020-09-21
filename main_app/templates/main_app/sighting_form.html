@@ -27,21 +27,21 @@
     var selectEl = document.getElementById('id_species');
     M.FormSelect.init(selectEl);
 </script>
-
+<div>
 <h3>Click the map below for latitude & longitude:</h3>
 <style>
     #map {
         height:400px;
-        width:100%;
+        width:400px;
     }
 </style>
 
-<div id="floating-panel">
+
     <input id="address" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
     <input id="submit" type ="button" value="Search" />
-</div>
 
-<div id="map"></div>
+    <div id="map"></div>
+</div>
 
 <script>
     let map, infoWindowLatLng;
