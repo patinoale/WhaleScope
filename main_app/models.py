@@ -49,7 +49,6 @@ class Comment(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     sighting = models.ForeignKey(Sighting, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    reply = models.ForeignKey('comment', null=True, related_name='replies', on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='comment_likes', blank=True)
 
     def __str__(self):
@@ -80,5 +79,8 @@ class Profile(models.Model):
     def __str__(self):
         return f"Profile of user {self.user.username}"
 
-
-    
+class Reply(models.Model):
+    text = models.TextField('comment', max_length=1000)
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 from .feeds import LatestPostsFeed
 
@@ -20,6 +20,6 @@ urlpatterns = [
     path('map/', views.map, name='map'),
     path('likes/<int:pk>/', views.like_sighting, name='like_sighting'),
     path('likecomment/<int:pk>/<int:comment_id>/', views.like_comment, name='like_comment'),
-    path("feed/rss", LatestPostsFeed(), name="post_feed"),
-
+    path('feed/rss', LatestPostsFeed(), name="post_feed"),
+    re_path(r'^map/generate', views.generate, name="generate")
 ]

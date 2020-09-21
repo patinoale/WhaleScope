@@ -13,7 +13,7 @@ import os
 import json
 import environ
 from django.conf import settings
-print(settings.GOOGLE_API_KEY)
+import requests
 
 # constants for AWS S3 photos
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
@@ -175,11 +175,10 @@ def map(request):
     sighting_list = []
 
     for s in user_sightings:
-
         s_photo = Photo.objects.filter(sighting_id=s.id).first()
         
         if s_photo == None:
-            s_url = "no_img_url"
+            s_url = "https://i.imgur.com/QLa6Vjy.png"
         else:
             s_url = s_photo.url
 
@@ -222,3 +221,15 @@ def like_comment(request, pk, comment_id):
                 comment.likes.add(request.user)
                 like = True
     return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
+    
+async def generate(request, response):
+    rootURL = "http://hotline.whalemuseum.org/"
+    newURL = rootURL + request.url
+    print('Running search...')
+    try:
+        r = await requests.get(newURL)
+        response.json(r.data)
+
+    except: 
+        print(error)
+        response.raise_for_status(error)
