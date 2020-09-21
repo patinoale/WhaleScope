@@ -77,7 +77,7 @@ class SightingDetail(DetailView):
 
 class SightingCreate(CreateView):
     model = Sighting
-    fields = ['title', 'date', 'latitude', 'longitude', 'description', 'species']
+    fields = ['title', 'date', 'latitude', 'longitude', 'location', 'description', 'species']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -90,7 +90,7 @@ class SightingCreate(CreateView):
 
 class SightingUpdate(UpdateView):
     model = Sighting
-    fields = ['date', 'latitude', 'longitude', 'description', 'species']
+    fields = ['date', 'latitude', 'longitude', 'location', 'description', 'species']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
