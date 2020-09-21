@@ -62,8 +62,14 @@ class SightingDetail(DetailView):
         liked_it = False
         if liked.likes.filter(id=self.request.user.id).exists():
             liked_it = True
-    
-        
+
+        comment = Comment.objects.get(id=comment_id)
+        comment_likes = get_object_or_404(Comment, id=comment.kwargs['comment_id'])
+        has_likes = comment_likes.has_likes()
+        like = False
+        if comment_likes.likes.filter(id=comment.request.user.id).exists():
+            like = True
+
         context['comment_form'] = CommentForm()
         context['total_likes'] = total_likes
         context['liked_it'] = liked_it
@@ -122,6 +128,7 @@ def add_comment(request, pk):
             new_comment.sighting = sighting
             form.save()
             return redirect('detail', pk=sighting.pk)
+        
     else:
         form = CommentForm()
     return render(request, 'detail', {'form': form})
@@ -139,8 +146,6 @@ def comments_update(request, pk, comment_id):
         return redirect('detail', pk=sighting.pk)
 
 
-
-
 def comments_delete(request, sighting_id, comment_id):
     context={}
     obj = get_object_or_404(Comment, id=comment_id)
@@ -151,17 +156,19 @@ def comments_delete(request, sighting_id, comment_id):
 
 def add_reply(request, pk, comment_id):
     sighting = get_object_or_404(Sighting, pk=pk)
+    comment = get_object_or_404(Comment, pk=pk)
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.user = request.user
-            new_comment.sighting = sighting
-            form.save()
-            return redirect('detail', pk=sighting.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'detail', {'form': form})
+        if comment_id:
+            form = CommentForm(instance=Comment.objects.get(id=comment_id), data=request.POST)
+            if form.is_valid():
+                reply = form.save(commit=False)
+                reply.user = request.user
+                reply.comment = comment
+                form.save()
+                return redirect('detail', comment_id, pk=sighting.pk)
+        else:
+            form = CommentForm()
+    return redirect(request, 'detail', comment_id, pk=sighting.pk)
 
 def map(request):
     user_sightings = Sighting.objects.all()
@@ -202,3 +209,16 @@ def like_sighting(request, pk):
         liked_it = True
     return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
 
+def like_comment(request, pk, comment_id):
+    sighting = get_object_or_404(Sighting, pk=pk)
+    if request.method == 'POST':
+        if comment_id:
+            comment = get_object_or_404(Comment, id=comment_id)
+            like = False
+            if comment.likes.filter(id=request.user.id).exists():
+                comment.likes.remove(request.user)
+                like = False
+            else:
+                comment.likes.add(request.user)
+                like = True
+    return HttpResponseRedirect(reverse('detail', args=[str(pk)]))

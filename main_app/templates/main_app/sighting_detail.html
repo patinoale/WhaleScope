@@ -67,6 +67,7 @@
         {% if sighting.has_comments.count %}
             <h6>{{object.title.capitalize }} has {{ sighting.has_comments.count }} comment{{ sighting.has_comments.count|pluralize }}</h6>
                 {% for comment in sighting.comment_set.all %}
+                
                     <div class="card-panel teal left-align">
                             <div style="display: inline-flex; color: white">{{ comment.text }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;">  {{ comment.user }}</div>
                                     <br>
@@ -74,22 +75,37 @@
                                   
                                             <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
                                                 <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
+                                                <form action="{% url 'like_comment' sighting.id comment.id %}" method="post">
+                                                    {% csrf_token %} 
+                                                    <button type="submit" name="comment_id" style="background-color:transparent; border: none;">
+                                                        {% if like %}
+                                                        <i style="color: #C0FDFF" class='material-icons likes'>thumb_up</i>
+                                                        {% else %}
+                                                        <i style="color: lightgrey" class='material-icons likes'>thumb_up</i>
+                                                        {% endif %}
+                                                        {% if has_likes %}
+                                                        <p style="margin-top: 0;"><small>{{ has_likes }} Likes</small></p>
+                                                        {% else %}
+                                                        {% endif %} 
+                                                    </button>
+                                                </form>
+
                                                 
                                                     
                         </div>
+                        
                         {% for reply in comment.replies.all %}
                         <div class="card-panel teal left-align">
                             <div style="display: inline-flex; color: white">{{ reply.comment }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;">  {{ reply.comment.user }}</div>
                         {% endfor %}   
 
                         <div class="left-align reply_form"  id="reply_form_{{ comment.id }}">
-                            <form action="{% url 'add_reply' sighting.id comment.id %}" method="post">
+                            <form action="{% url 'add_reply' object.id comment.id %}" method="post">
                                 {% csrf_token %}
                                 {{ comment_form.as_p }}
                                 <input type="submit" name="{{ comment.id }}" value="Add Reply" class="btn">
                             </form>
                         </div>
-
                         </div>
                             <div id="edit_field_{{ comment.id }}" class="edit_field">
                                 <form  action="{% url 'comments_update' object.id comment.id %}" method="post">

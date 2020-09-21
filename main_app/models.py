@@ -80,3 +80,5 @@ class Profile(models.Model):
     def __str__(self):
         return f"Profile of user {self.user.username}"
 
+
+    
