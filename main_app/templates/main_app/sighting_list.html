@@ -20,7 +20,7 @@
             <p style ="text-transform:capitalize;">Posted by: {{ object.user }}</p>
             <p>Location: {{ object.location }}</p>
             <p>Species: {{ object.get_species_display }}</p>
-            <p class="right"><small>{{ object.has_comments.count }} comment{{ object.has_comments.count|pluralize }}</small></p>
+            <p><small>{{ object.has_comments.count }} comment{{ object.has_comments.count|pluralize }}</small></p>
             <p>{{ object.date }}</p>
     </div>
   </div>

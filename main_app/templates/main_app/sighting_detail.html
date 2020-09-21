@@ -73,21 +73,7 @@
                                   
                                             <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
                                                 <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
-                                                <form action="{% url 'like_comment' sighting.id comment.id %}" method="post">
-                                                    {% csrf_token %} 
-                                                    <button type="submit" name="comment_id" style="background-color:transparent; border: none;">
-                                                        {% if like %}
-                                                        <i style="color: #C0FDFF" class='material-icons likes'>thumb_up</i>
-                                                        {% else %}
-                                                        <i style="color: lightgrey" class='material-icons likes'>thumb_up</i>
-                                                        {% endif %}
-                                                        {% if has_likes %}
-                                                        <p style="margin-top: 0;"><small>{{ has_likes }} Likes</small></p>
-                                                        {% else %}
-                                                        {% endif %} 
-                                                    </button>
-
-                                                </form>                   
+                                                                 
                         </div>
                         
                         <div class="left-align reply_form"  id="reply_form_{{ comment.id }}">
