@@ -150,7 +150,18 @@ def comments_delete(request, sighting_id, comment_id):
         return redirect('detail', sighting_id)
 
 def add_reply(request, pk, comment_id):
-    pass
+    sighting = get_object_or_404(Sighting, pk=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.user = request.user
+            new_comment.sighting = sighting
+            form.save()
+            return redirect('detail', pk=sighting.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'detail', {'form': form})
 
 def map(request):
     user_sightings = Sighting.objects.all()
