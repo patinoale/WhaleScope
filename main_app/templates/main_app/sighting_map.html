@@ -78,10 +78,11 @@
 
         
         
-
-        for(var i=0; i < sightings_list.length; i++){
-            addMarker(sightings_list[i]);
-        }
+        document.getElementById("generate").addEventListener("click", () => {
+            for(var i=0; i < sightings_list.length; i++){
+                addMarker(sightings_list[i]);
+            }
+        })
 
         function addMarker(props){
             var x = parseFloat(props.lat)
@@ -160,9 +161,9 @@
     }
 
     // event listener for click on 'generate' button that uses searchLat and searchLng
-    document.getElementById("generate").addEventListener("click", () => {
-        handleGenerate(searchLat, searchLng)
-    })
+    // document.getElementById("generate").addEventListener("click", () => {
+    //     handleGenerate(searchLat, searchLng)
+    // })
 </script>
 
 <script defer
