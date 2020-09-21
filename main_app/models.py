@@ -61,6 +61,9 @@ class Comment(models.Model):
     def has_likes(self):
         return self.likes.count()
 
+    def has_replies(self):
+        return self.reply.count()
+
     class Meta:
         ordering = ['-created_date']
 

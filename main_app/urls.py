@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .feeds import LatestPostsFeed
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -13,10 +14,12 @@ urlpatterns = [
     path('sightings/<int:pk>/add_comment/', views.add_comment, name='add_comment'),
     path('sightings/<int:pk>/<int:comment_id>/', views.comments_update, name='comments_update'),
     path('sightings/<int:sighting_id>/<int:comment_id>/comments_delete/', views.comments_delete, name='comments_delete'),
+    path('sightings/<int:pk>/<int:comment_id>/add_reply', views.add_reply, name='add_reply'),
     path('sightings/<int:sighting_id>/add_photo/', views.add_photo, name='add_photo'),
     path('sightings/<int:sighting_id>/<int:photo_id>/photos_delete/', views.photos_delete, name='photos_delete'),
     path('map/', views.map, name='map'),
     path('likes/<int:pk>/', views.like_sighting, name='like_sighting'),
-    path('likes/<int:comment_id>/', views.like_comment, name='like_comment'),
+    ### path('likecomment/<int:pk>/<int:comment_id>/', views.like_comment, name='like_comment'),
+    path("feed/rss", LatestPostsFeed(), name="post_feed"),
 
 ]
