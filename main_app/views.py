@@ -12,7 +12,7 @@ import os
 import json
 import environ
 from django.conf import settings
-print(settings.GOOGLE_API_KEY)
+import requests
 
 # constants for AWS S3 photos
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
@@ -140,7 +140,6 @@ def map(request):
     sighting_list = []
 
     for s in user_sightings:
-
         s_photo = Photo.objects.filter(sighting_id=s.id).first()
         
         if s_photo == None:
@@ -163,3 +162,14 @@ def map(request):
         'GOOGLE_API_KEY': settings.GOOGLE_API_KEY
     })
 
+async def generate(request, response):
+    rootURL = "http://hotline.whalemuseum.org/"
+    newURL = rootURL + request.url
+    print('Running search...')
+    try:
+        r = await requests.get(newURL)
+        response.json(r.data)
+
+    except: 
+        print(error)
+        response.raise_for_status(error)
