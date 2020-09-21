@@ -7,7 +7,7 @@
 
 <div class="card">
     <div class="card-content">
-        <span class="card-title">{{ object.title }}</span>
+        <span class="card-title">{{ object.title.capitalize }}</span>
         <p>Date: {{ object.date }}</p>
         <p>Latitude: {{ object.latitude }}</p>
         <p>Longitude: {{ object.longitude }}</p>
@@ -24,7 +24,7 @@
                         {% if liked_it %}
                         <i style="color: #C0FDFF" class='material-icons likes'>thumb_up</i>
                         {% else %}
-                        <i style="color: lightgrey" class='material-icons likes'>thumb_up</i>
+                        <i style="color: grey" class='material-icons likes'>thumb_up</i>
                         {% endif %}
                         {% if total_likes %}
                         <p style="margin-top: 0;"><small>{{ total_likes }} Likes</small></p>
@@ -32,8 +32,6 @@
                         {% endif %} 
                     </button>
                 </form>
-                
-
             </div>
         </div>
     </div> 
@@ -75,7 +73,20 @@
                                   
                                             <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
                                                 <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
-                                                
+                                                <form action="{% url 'like_comment' sighting.id comment.id %}" method="post">
+                                                    {% csrf_token %} 
+                                                    <button type="submit" name="comment_id" style="background-color:transparent; border: none;">
+                                                        {% if like %}
+                                                        <i style="color: #C0FDFF" class='material-icons likes'>thumb_up</i>
+                                                        {% else %}
+                                                        <i style="color: lightgrey" class='material-icons likes'>thumb_up</i>
+                                                        {% endif %}
+                                                        {% if has_likes %}
+                                                        <p style="margin-top: 0;"><small>{{ has_likes }} Likes</small></p>
+                                                        {% else %}
+                                                        {% endif %} 
+                                                    </button>
+
                                                 </form>                   
                         </div>
                         
@@ -92,7 +103,6 @@
                             <div style="display: inline-flex; color: white">{{ reply.text }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;">  {{ reply.user }}</div>
                             <a href="{% url 'replies_delete' sighting.id comment.id reply.id %}">🚯</a>
                             {% endfor %}   
-
                         </div>
                             <div id="edit_field_{{ comment.id }}" class="edit_field">
                                 <form  action="{% url 'comments_update' object.id comment.id %}" method="post">
@@ -103,10 +113,10 @@
                             </div>
                             {% endfor %}
                             {% else %}
-                            <div>
-                                No Comments Yet
-                            </div>
-                            {% endif %} 
+                    <div>
+                        No Comments Yet
+                    </div>
+        {% endif %} 
     </div>
 </div>
 
