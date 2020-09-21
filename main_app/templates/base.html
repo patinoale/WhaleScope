@@ -20,6 +20,7 @@
     <a href="{% url 'about' %}">About</a>
     
     {% if user.is_authenticated %}
+      <a id="user-name">Hello, {{ user }}!</a>
       <a href="{% url 'logout' %}">Log Out</a>
       <a href="{% url 'sightings_create' %}">Add A Sighting</a>
       <a href="{% url 'map' %}">Sightings Map</a>

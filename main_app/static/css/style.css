@@ -180,6 +180,45 @@ footer {
   height: 75px;
 }
 
+.signup-form {
+  background: rgb(1, 15, 30);
+  box-shadow: 0 0 1rem #c0fdff;
+  height: 400px;
+  margin-top: 8rem;
+  margin-left: 30rem;
+  width: 370px;
+  padding: 3rem;
+}
 
+.about-heading {
+  font-size: 55px;
+  margin-top: 7rem;
+}
 
+.about-parag {
+  font-weight: 300;
+}
+
+#meet {
+  font-size: 30px;
+}
+
+#team-pic {
+  width: 500px;
+  height: 300;
+  box-shadow: 0 0 1rem #c0fdff;
+}
+
+#user-name {
+  float: left;
+  padding-top: 25px;
+  padding-left: 0px;
+  font-weight: 300;
+  font-size: 17px;
+}
+
+#user-name:hover {
+  background: none;
+  color: white;
+}
 
