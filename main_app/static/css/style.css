@@ -211,7 +211,7 @@ footer {
 
 #user-name {
   float: left;
-  padding-top: 25px;
+  padding-top: 18.5px;
   padding-left: 0px;
   font-weight: 300;
   font-size: 17px;
@@ -221,4 +221,48 @@ footer {
   background: none;
   color: white;
 }
+
+#map-header {
+  margin-top: 6rem;
+  margin-bottom: 0px;
+}
+
+.location-input {
+  background: white;
+  border: 0 solid;
+  border-bottom: 1px solid rgba(white, .5);
+  color: rgb(20, 19, 19);
+  display: inline;
+  margin-left: 0rem;
+  margin-right: 5px;
+  margin-bottom: 7px;
+  padding: .5rem;
+  transition: 250ms background ease-in;
+  font-size: 19px;
+  width: 250px;
+  height: 20px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.map-submit {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  display: inline;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 4rem;
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.map-submit:hover {
+  background: #c0fdff;
+  color: black;
+}
+
 
