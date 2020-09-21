@@ -144,7 +144,7 @@ def map(request):
         s_photo = Photo.objects.filter(sighting_id=s.id).first()
         
         if s_photo == None:
-            s_url = "no_img_url"
+            s_url = "https://i.imgur.com/QLa6Vjy.png"
         else:
             s_url = s_photo.url
 
