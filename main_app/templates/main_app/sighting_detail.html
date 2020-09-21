@@ -82,14 +82,16 @@
                         <div class="left-align reply_form"  id="reply_form_{{ comment.id }}">
                             <form action="{% url 'add_reply' sighting.id comment.id %}" method="post">
                                 {% csrf_token %}
-                                {{ comment_form.as_p }}
+                                {{ reply_form.as_p }}
                                 <input type="submit" value="Add Reply" class="btn">
                             </form>
                         </div>
+                        
                         {% for reply in comment.reply_set.all %}
                         <div class="card-panel teal" style="width: 70%;">
                             <div style="display: inline-flex; color: white">{{ reply.text }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;">  {{ reply.user }}</div>
-                        {% endfor %}   
+                            <a href="{% url 'replies_delete' sighting.id comment.id reply.id %}">🚯</a>
+                            {% endfor %}   
 
                         </div>
                             <div id="edit_field_{{ comment.id }}" class="edit_field">

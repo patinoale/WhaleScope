@@ -64,7 +64,6 @@ class SightingDetail(DetailView):
             liked_it = True
 
 
-
         # comment = Comment.objects.get(id=comment_id)
         # comment_likes = get_object_or_404(Comment, id=comment.kwargs['comment_id'])
         # has_likes = comment_likes.has_likes()
@@ -72,9 +71,10 @@ class SightingDetail(DetailView):
         # if comment_likes.likes.filter(id=comment.request.user.id).exists():
         #     like = True
 
-            context['comment_form'] = CommentForm()
-            context['total_likes'] = total_likes
-            context['liked_it'] = liked_it
+        context['comment_form'] = CommentForm()
+        context['reply_form'] = ReplyForm()
+        context['total_likes'] = total_likes
+        context['liked_it'] = liked_it
         
         return context
 
@@ -134,7 +134,6 @@ def add_comment(request, pk):
     else:
         form = CommentForm()
     return render(request, 'detail', {'form': form})
-
 
 
 
@@ -228,7 +227,7 @@ def add_reply(request, sighting_id, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     print(sighting_id)
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        form = ReplyForm(request.POST)
         if form.is_valid():
             new_reply = form.save(commit=False)
             new_reply.user = request.user
@@ -237,5 +236,13 @@ def add_reply(request, sighting_id, comment_id):
             return redirect('detail', sighting_id)
         
     else:
-        form = CommentForm()
+        form = ReplyForm()
     return render(request, 'detail', {'form': form})
+
+def replies_delete(request, sighting_id, comment_id, reply_id):
+    context={}
+    obj = get_object_or_404(Reply, id=reply_id)
+
+    if request.method == 'GET':
+        obj.delete()
+        return redirect('detail', sighting_id)
