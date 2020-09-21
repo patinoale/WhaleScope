@@ -1,15 +1,322 @@
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+  text-align: center;
+  -webkit-background-size: cover;
+  background: url(https://i.imgur.com/uQJhqAr.jpg) no-repeat center center fixed; 
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  margin: 0;
+  font-family: 'Rajdhani', sans-serif;
+  color: white;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #27264000;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  border-bottom: 1px;
+  border-color: white;
+}
+
+.navbar a {
+  float: right;
+  display: block;
+  color: #ffffff;
+  text-align: center;
+  padding: 17px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  transition: 250ms background ease-in;
+}
+
+#logo-image {
+  height: 50px;
+  width: 50px;
+}
+
+#home-logo-link {
+  float: left;
+  padding: 5px 25px 0px 25px;
+}
+
+#home-logo {
+  height: 150px;
+  width: 400px;
+  margin-top: 3.5rem;
+  margin-right: 20rem;
+}
+
+.navbar a:hover {
+  background: #c0fdff;
+  color: black;
+}
+
+#home-logo-link:hover {
+  background: rgb(49, 98, 119);
+  background-image: url(https://i.imgur.com/QLa6Vjy.png);
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 5px;
+  width: 100%;
+  background-color: #27264000;
+  color: white;
+  text-align: right;
+}
+
+#slogan {
+  margin: 0rem;
+  color: white;
+  margin-right: 20rem;
+  margin-top: 0rem;
+  padding-top: 0rem;
+  font-size: 20px;
+}
+
+.home-link-container {
+  margin-top: 1.5rem;
+  color: white;
+  margin-right: 20rem;
+  font-size: 40px;
+}
+
+.home-login-signup {
+  border: 2px solid white;
+  color: white;
+  display: inline-block;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 6rem; 
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.home-login-signup:hover {
+  background: #c0fdff;
+  color: black;
+}
+
+.home-my-sightings {
+  border: 2px solid white;
+  color: white;
+  display: inline-block;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 6.5em; 
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.home-my-sightings:hover {
+  background: #c0fdff;
+  color: black;
+}
   
-  main {
-    flex: 1 0 auto;
+.login-form {
+  background: rgb(1, 15, 30);
+  box-shadow: 0 0 1rem #c0fdff;
+  height: 350px;
+  margin-top: 8rem;
+  margin-left: 30rem;
+  width: 370px;
+  padding: 3rem;
+}
+
+.login-username, .login-password {
+  background: white;
+  border: 0 solid;
+  border-bottom: 1px solid rgba(white, .5);
+  color: rgb(20, 19, 19);
+  display: block;
+  margin: 1rem;
+  padding: .5rem;
+  transition: 250ms background ease-in;
+  width: 20rem;
+  height: 1.5rem;
+  font-size: 20px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.login-submit {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  display: block;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 8rem;
+  height: 2.5rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 25px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.login-submit:hover {
+  background: #c0fdff;
+  color: black;
+}
+
+#login-letter-logo {
+  width: 300px;
+  height: 95px;
+}
+
+#login-logo {
+  width: 75px;
+  height: 75px;
+}
+
+.signup-form {
+  background: rgb(1, 15, 30);
+  box-shadow: 0 0 1rem #c0fdff;
+  height: 400px;
+  margin-top: 8rem;
+  margin-left: 30rem;
+  width: 370px;
+  padding: 3rem;
+}
+
+.about-heading {
+  font-size: 55px;
+  margin-top: 7rem;
+}
+
+.about-parag {
+  font-weight: 300;
+}
+
+#meet {
+  font-size: 30px;
+}
+
+#team-pic {
+  width: 500px;
+  height: 300;
+  box-shadow: 0 0 1rem #c0fdff;
+}
+
+#user-name {
+  float: left;
+  padding-top: 18.5px;
+  padding-left: 0px;
+  font-weight: 300;
+  font-size: 17px;
+}
+
+#user-name:hover {
+  background: none;
+  color: white;
+}
+
+#map-header {
+  margin-top: 6rem;
+  margin-bottom: 0px;
+}
+
+.location-input {
+  background: white;
+  border: 0 solid;
+  border-bottom: 1px solid rgba(white, .5);
+  color: rgb(20, 19, 19);
+  display: inline;
+  margin-left: 0rem;
+  margin-right: 5px;
+  margin-bottom: 7px;
+  padding: .5rem;
+  transition: 250ms background ease-in;
+  font-size: 19px;
+  width: 250px;
+  height: 20px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.map-submit {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  display: inline;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 4rem;
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.map-submit:hover {
+  background: #c0fdff;
+  color: black;
+}
+
+
+.whale-feed-header {
+  font-size: 40px;
+  margin-top: 7%;
+}
+
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+  margin-bottom: 2rem;
+}
+
+.row:after {
+  content: "";
+
+  clear: both;
+}
+
+.card {
+  box-shadow: 0 0 1rem #c0fdff;
+  padding: 16px;
+  text-align: left;
+  background-color: rgb(1, 15, 30);
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
   }
-  
-  footer {
-    padding-top: 0;
-    text-align: right;
-  }
-  
+}
+
+.card:hover {
+  background: #c0fdff;
+  color: black;
+  transition: 250ms background ease-in;
+}
+
+.card p {
+  text-decoration: none;
+}
+
+.card-title {
+  text-transform:capitalize; 
+  font-weight: 700; 
+  font-size: 20px;
+}
+
+
+
+
+
+

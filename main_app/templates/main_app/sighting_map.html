@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Sightings Map</h1>
+<h1 id="map-header">Find Sightings Near You!</h1>
 <style>
     #map {
-        height:400px;
-        width:100%;
+        height:480px;
+        width:800px;
+        margin-left: 20rem;
+        box-shadow: 0 0 1rem #c0fdff;
+        padding-top: 3rem;
     }
 </style>
 
-<div id="floating-panel">
+<div>
     {% csrf_token %}
-    <input id="address" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
-    <input id="search" type ="button" value="Search Map" />
-    <input id="generate" type ="button" value="Generate Data" />
+    <input id="address" class="location-input" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
+    <input id="submit"  class="map-submit" type ="button" value="Search" />
+    <input id="generate" type ="button" value="Generate" />
 </div>
+
 
 <div id="map"></div>
 

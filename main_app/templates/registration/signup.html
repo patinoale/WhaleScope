@@ -2,13 +2,22 @@
 
 {% block content %}
 
-<h1>Sign Up</h1>
+<form method="post" class="signup-form" action="{% url 'signup' %}"> 
+  <header><img id="login-letter-logo" src="https://i.imgur.com/QhBHeqV.png" alt="Whale Scope logo">
+  </header>
+  <span>
+    <i><img id="login-logo" src="https://i.imgur.com/AzyIR4f.png" alt=""/></i>
+  </span>
 
-{% if error_message %}<p class="red-text">{{ error_message }}</p>{% endif %}
+  {% if error_message %}<p class="red-text">{{ error_message }}</p>{% endif %}
+  {% csrf_token %}
+  <input placeholder="Username" class="login-username" type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus="" required="" id="id_username"> 
 
-<form method="post" action="{% url 'signup' %}">
-    {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" class="btn" value="signup">
+  <input placeholder="Password" class="login-password" type="password" name="password1" autocomplete="new-password" required="" id="id_password1">
+
+  <input placeholder="Password Confirmation" class="login-password" type="password" name="password2" autocomplete="new-password" required="" id="id_password2"> 
+
+  <input type="submit" class="login-submit" class="btn" value="Sign up">  
+</form>
 
 {% endblock %}
