@@ -17,6 +17,16 @@
 <div id="map"></div>
 
 <script>
+    var input = document.getElementById("address");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("submit").click();
+        }
+    });
+</script>
+
+<script>
     {% autoescape off %}
     var sightings_list = {{ sightings }}
     {% endautoescape %}
