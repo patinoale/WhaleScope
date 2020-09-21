@@ -20,7 +20,7 @@
     <p id="slogan">Discover, share, & enjoy the world of whale watching</p>
     <div class="home-link-container">
         {% if user.is_authenticated %}
-        <a href="{% url 'index' %}" class="home-my-sightings">My Sightings</a>
+        <a href="{% url 'index' %}" class="home-my-sightings">Whale Feed</a>
       {% else %}
         <a href="{% url 'signup' %}" class="home-login-signup">Sign Up</a>
         &nbsp;&nbsp;

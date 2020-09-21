@@ -269,34 +269,54 @@ footer {
 .whale-feed-header {
   font-size: 40px;
   margin-top: 7%;
-  
+}
+
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+  margin-bottom: 2rem;
+}
+
+.row:after {
+  content: "";
+
+  clear: both;
 }
 
 .card {
-  background-color: rgb(18, 25, 92);
-  display: inline-block;
-  width: 10rem;
+  box-shadow: 0 0 1rem #c0fdff;
+  padding: 16px;
+  text-align: left;
+  background-color: rgb(1, 15, 30);
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+.card:hover {
+  background: #c0fdff;
+  color: black;
+  transition: 250ms background ease-in;
+}
+
+.card p {
+  text-decoration: none;
 }
 
 .card-title {
-  text-decoration: none;
-  color: white;
+  text-transform:capitalize; 
+  font-weight: 700; 
   font-size: 20px;
 }
 
 
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 15%;
-}
 
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
 
-.container {
-  padding: 2px 16px;
-}
 
 

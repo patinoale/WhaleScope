@@ -14,6 +14,8 @@
 
     <input id="address" class="location-input" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
     <input id="submit"  class="map-submit" type ="button" value="Search" />
+    <input id="generate" type ="button" value="Generate" />
+
 
 <div id="map"></div>
 
@@ -22,7 +24,7 @@
     input.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
-            document.getElementById("submit").click();
+            document.getElementById("search").click();
         }
     });
 </script>
@@ -34,12 +36,14 @@
 </script>
 
 <script>
-    let map, infoWindow, myLatLng, searchLat, searchLng;
+    let map, infoWindow, myLatLng, searchLat, searchLng, api_sightings_list;
     let activeInfoWindow = null;
 
     function initMap(){
 
-        myLatLng = {lat:34.0522,lng:-118.2437}
+        myLatLng = {lat:39.9612,lng:-82.9988}
+        searchLat = 39.9612
+        searchLng = -82.9988
 
         var options = {
             zoom:8,
@@ -70,9 +74,12 @@
         }
 
         const geocoder = new google.maps.Geocoder();
-        document.getElementById("submit").addEventListener("click", () => {
+        document.getElementById("search").addEventListener("click", () => {
             geocodeAddress(geocoder, map);
         });
+
+        
+        
 
         for(var i=0; i < sightings_list.length; i++){
             addMarker(sightings_list[i]);
@@ -133,6 +140,33 @@
     }
 
 </script>
+
+<script>
+    // function that fetches response from backend
+    function whaleAPI(lat, lng) {
+        searchURL = "api.json?near=" + lat + "," + lng + "&radius=100"
+        return fetch("/generate/" + searchURL, {
+            method: "GET",
+            headers: new Headers({ "Content-Type": "application/json" }),
+        }).then(res => {
+            // if (res.ok) return res.json();
+            // throw new Error('Search invalid');
+            return res.json()
+        }).catch(error => console.log(error))
+    }
+
+    // function that awaits for response
+    async function handleGenerate(lat, lng) {
+        const response = await whaleAPI(lat, lng);
+        api_sightings_list = response.items;
+    }
+
+    // event listener for click on 'generate' button that uses searchLat and searchLng
+    document.getElementById("generate").addEventListener("click", () => {
+        handleGenerate(searchLat, searchLng)
+    })
+</script>
+
 <script defer
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&callback=initMap">
 </script>

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -16,4 +16,5 @@ urlpatterns = [
     path('sightings/<int:sighting_id>/add_photo/', views.add_photo, name='add_photo'),
     path('sightings/<int:sighting_id>/<int:photo_id>/photos_delete/', views.photos_delete, name='photos_delete'),
     path('map/', views.map, name='map'),
+    re_path(r'^map/generate', views.generate, name="generate")
 ]
