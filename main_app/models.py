@@ -84,3 +84,6 @@ class Reply(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.text)

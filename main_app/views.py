@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Sighting, Comment, Photo
+from .models import *
 from .forms import *
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -63,16 +63,18 @@ class SightingDetail(DetailView):
         if liked.likes.filter(id=self.request.user.id).exists():
             liked_it = True
 
-        comment = Comment.objects.get(id=comment_id)
-        comment_likes = get_object_or_404(Comment, id=comment.kwargs['comment_id'])
-        has_likes = comment_likes.has_likes()
-        like = False
-        if comment_likes.likes.filter(id=comment.request.user.id).exists():
-            like = True
 
-        context['comment_form'] = CommentForm()
-        context['total_likes'] = total_likes
-        context['liked_it'] = liked_it
+
+        # comment = Comment.objects.get(id=comment_id)
+        # comment_likes = get_object_or_404(Comment, id=comment.kwargs['comment_id'])
+        # has_likes = comment_likes.has_likes()
+        # like = False
+        # if comment_likes.likes.filter(id=comment.request.user.id).exists():
+        #     like = True
+
+            context['comment_form'] = CommentForm()
+            context['total_likes'] = total_likes
+            context['liked_it'] = liked_it
         
         return context
 
@@ -134,6 +136,8 @@ def add_comment(request, pk):
     return render(request, 'detail', {'form': form})
 
 
+
+
 def comments_update(request, pk, comment_id):
     sighting = get_object_or_404(Sighting, pk=pk)
     if request.method == 'POST':
@@ -154,21 +158,6 @@ def comments_delete(request, sighting_id, comment_id):
         obj.delete()
         return redirect('detail', sighting_id)
 
-def add_reply(request, pk, comment_id):
-    sighting = get_object_or_404(Sighting, pk=pk)
-    comment = get_object_or_404(Comment, pk=pk)
-    if request.method == 'POST':
-        if comment_id:
-            form = CommentForm(instance=Comment.objects.get(id=comment_id), data=request.POST)
-            if form.is_valid():
-                reply = form.save(commit=False)
-                reply.user = request.user
-                reply.comment = comment
-                form.save()
-                return redirect('detail', comment_id, pk=sighting.pk)
-        else:
-            form = CommentForm()
-    return redirect(request, 'detail', comment_id, pk=sighting.pk)
 
 def map(request):
     user_sightings = Sighting.objects.all()
@@ -208,20 +197,20 @@ def like_sighting(request, pk):
         liked_it = True
     return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
 
-def like_comment(request, pk, comment_id):
-    sighting = get_object_or_404(Sighting, pk=pk)
-    if request.method == 'POST':
-        if comment_id:
-            comment = get_object_or_404(Comment, id=comment_id)
-            like = False
-            if comment.likes.filter(id=request.user.id).exists():
-                comment.likes.remove(request.user)
-                like = False
-            else:
-                comment.likes.add(request.user)
-                like = True
-    return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
-    
+# def like_comment(request, pk, comment_id):
+#     sighting = get_object_or_404(Sighting, pk=pk)
+#     if request.method == 'POST':
+#         if comment_id:
+#             comment = get_object_or_404(Comment, id=comment_id)
+#             like = False
+#             if comment.likes.filter(id=request.user.id).exists():
+#                 comment.likes.remove(request.user)
+#                 like = False
+#             else:
+#                 comment.likes.add(request.user)
+#                 like = True
+#     return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
+
 async def generate(request, response):
     rootURL = "http://hotline.whalemuseum.org/"
     newURL = rootURL + request.url
@@ -233,3 +222,20 @@ async def generate(request, response):
     except: 
         print(error)
         response.raise_for_status(error)
+
+def add_reply(request, sighting_id, comment_id):
+    sighting = get_object_or_404(Sighting, id=sighting_id)
+    comment = get_object_or_404(Comment, id=comment_id)
+    print(sighting_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_reply = form.save(commit=False)
+            new_reply.user = request.user
+            new_reply.comment = comment
+            form.save()
+            return redirect('detail', sighting_id)
+        
+    else:
+        form = CommentForm()
+    return render(request, 'detail', {'form': form})
