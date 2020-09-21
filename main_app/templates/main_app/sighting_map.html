@@ -10,9 +10,10 @@
 </style>
 
 <div id="floating-panel">
+    {% csrf_token %}
     <input id="address" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
-    <input id="search" type ="button" value="Search" />
-    <input id="generate" type ="button" value="Generate" />
+    <input id="search" type ="button" value="Search Map" />
+    <input id="generate" type ="button" value="Generate Data" />
 </div>
 
 <div id="map"></div>
@@ -141,12 +142,19 @@
 </script>
 
 <script>
+
+    const token = document.querySelector('[name=csrfmiddlewaretoken]').value
+
     // function that fetches response from backend
     function whaleAPI(lat, lng) {
         searchURL = "api.json?near=" + lat + "," + lng + "&radius=100"
-        return fetch("/generate/" + searchURL, {
-            method: "GET",
-            headers: new Headers({ "Content-Type": "application/json" }),
+        return fetch("/generate/", {
+            method: "POST",
+            body: JSON.stringify({lat,lng}),
+            headers: new Headers({ 
+                "Content-Type": "application/json",
+                "X-CSRFToken": token
+            }),
         }).then(res => {
             // if (res.ok) return res.json();
             // throw new Error('Search invalid');
@@ -157,13 +165,14 @@
     // function that awaits for response
     async function handleGenerate(lat, lng) {
         const response = await whaleAPI(lat, lng);
-        api_sightings_list = response.items;
+        console.log(response)
+        return response
     }
 
     // event listener for click on 'generate' button that uses searchLat and searchLng
-    // document.getElementById("generate").addEventListener("click", () => {
-    //     handleGenerate(searchLat, searchLng)
-    // })
+    document.getElementById("generate").addEventListener("click", () => {
+        handleGenerate(searchLat, searchLng)
+    })
 </script>
 
 <script defer
