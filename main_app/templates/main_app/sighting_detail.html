@@ -52,7 +52,7 @@
             <h6>{{object.title.capitalize }} has {{ sighting.has_comments.count }} comment{{ sighting.has_comments.count|pluralize }}</h6>
                 {% for comment in sighting.comment_set.all %}
                     <div class="card-panel teal left-align">
-                            <div style="display: inline-flex; color: white">{{ comment.text }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;"> written by {{ comment.user }}</div>
+                            <div style="display: inline-flex; color: white">{{ comment.text }}</div> &nbsp;&nbsp; <div class="right" style = "text-transform:capitalize;" style="display: inline-flex; color: white;">By {{ comment.user }}</div>
                                     <br>
                                         <div class="left" style="color: white"><small>{{comment.created_date}}</small></div>
                                   
