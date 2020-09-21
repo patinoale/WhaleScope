@@ -1,9 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+        
+    body {
+        text-align: center;
+        background: url(https://i.imgur.com/cXSmgv4.jpg) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        margin: 0;
+        font-family: 'Rajdhani', sans-serif;
+    }
+        
+</style>
 
-    <h1>Home</h1>
- 
+    <img id="home-logo"src="https://i.imgur.com/QhBHeqV.png" alt="Whale Scope">
+    <p id="slogan">Discover, share, & enjoy the world of whale watching</p>
+    <div class="home-link-container">
+        {% if user.is_authenticated %}
+        <a href="{% url 'index' %}" class="home-my-sightings">Whale Feed</a>
+      {% else %}
+        <a href="{% url 'signup' %}" class="home-login-signup">Sign Up</a>
+        &nbsp;&nbsp;
+        <a href="{% url 'login' %}" class="home-login-signup">Login</a>
+      {% endif %}
+    </div>
 
     
 {% endblock %}
