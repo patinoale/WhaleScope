@@ -23,7 +23,6 @@
 </script>
 
 <script>
-
     let map, infoWindow;
     let activeInfoWindow = null;
 
@@ -74,9 +73,11 @@
         });
 
         if(props.title){
-            var cStr = '<h4>' + String(props.title) + '<h4>'
+            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.title) + "<h4></div>"
+            var sUrl = props.url
+            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + props.url + "'></div>"
             var infoWindowSighting = new google.maps.InfoWindow({
-            content: cStr
+            content: sImg + tStr
         });
 
         marker.addListener('click', function(){
