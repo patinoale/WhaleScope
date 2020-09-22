@@ -15,7 +15,13 @@
   <div class="row">
     <div class="column">
     <div class="card">
-        <a href="{% url 'detail' sighting.id %}"><img src="https://i.imgur.com/AzyIR4f.png" alt="Whale Photo" style="width:100%;"></a>
+      {% for photo in sighting.photo_set.all %}
+      {% if forloop.first %}
+        <a href="{% url 'detail' sighting.id %}"><img src="{{photo.url}}" alt="Whale Photo" style="width:100%; height: 15rem;"></a>
+        {% endif %}
+        {% empty %}
+        <a href="{% url 'detail' sighting.id %}"><img src="https://i.imgur.com/AzyIR4f.png" style="width:100%; height: 15rem;" alt="Whale Photo" style="width:100%;"></a>
+        {% endfor %}
             <p style = "text-transform:capitalize;" class="card-title">{{ sighting.title }}</p> 
             <p>Location: {{ sighting.location }}</p>
             <p>Species: {{ sighting.get_species_display }}</p>
