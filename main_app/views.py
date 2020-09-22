@@ -16,6 +16,7 @@ import json
 import environ
 from django.conf import settings
 import requests
+from django.http import HttpResponse
 
 # constants for AWS S3 photos
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
@@ -187,6 +188,7 @@ def map(request):
         'GOOGLE_API_KEY': settings.GOOGLE_API_KEY
     })
 
+
 @login_required
 def like_sighting(request, pk):
     sighting = get_object_or_404(Sighting, pk=pk)
@@ -199,26 +201,25 @@ def like_sighting(request, pk):
         liked_it = True
     return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
 
-
-
-
-async def generate(request, response):
+def generate(request):
+    lat = json.loads(request.body.decode('utf-8')).get('lat')
+    lng = json.loads(request.body.decode('utf-8')).get('lng')
     rootURL = "http://hotline.whalemuseum.org/"
-    newURL = rootURL + request.url
+    searchURL = "api.json?near=" + lat + "," + lng + "&radius=3"
+    newURL = rootURL + searchURL
     print('Running search...')
     try:
-        r = await requests.get(newURL)
-        response.json(r.data)
-
+        r = requests.get(newURL).json()
+        return HttpResponse(json.dumps(r), content_type="application/json")
     except: 
-        print(error)
-        response.raise_for_status(error)
+        pass
+
 
 @login_required
 def add_reply(request, sighting_id, comment_id):
     sighting = get_object_or_404(Sighting, id=sighting_id)
     comment = get_object_or_404(Comment, id=comment_id)
-    print(sighting_id)
+    
     if request.method == 'POST':
         form = ReplyForm(request.POST)
         if form.is_valid():
