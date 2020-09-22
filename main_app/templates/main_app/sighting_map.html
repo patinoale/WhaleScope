@@ -2,6 +2,7 @@
 {% block content %}
 
 <h1 id="map-header">Find Sightings Near You!</h1>
+<p>If you have allowed for location services, our map will use geolocation to center itself near your current location.<br/>Alternatively, try typing in a city or zipcode into the input field. Then click the 'Search Location' button.<br/>Once you have the map centered on your location, click the 'Generate Data' button to see all the nearby whale sightings that have occurred!<br/>Try clicking on a marker to get more details about the sighting. Happy Scoping!</p>
 <style>
     #map {
         height:480px;
@@ -29,16 +30,13 @@
 </script>
 
 <script>
-    let map, infoWindow, geocoder, myLatLng, searchLat, searchLng;
+    let map, infoWindow, geocoder, myLatLng;
     let activeInfoWindow = null;
     let markers = [];
     let data_list = []
 
     function initMap() {
-
         myLatLng = {lat:39.9612,lng:-82.9988}
-        searchLat = 39.9612
-        searchLng = -82.9988
 
         var options = {
             zoom:8,
@@ -58,9 +56,11 @@
     });
     
     document.getElementById("generate").addEventListener("click", () => {
+        var myLat = parseFloat(map.getCenter().lat()).toFixed(9);
+        var myLng = parseFloat(map.getCenter().lng()).toFixed(9);
         deleteMarkers();
-        handleGenerate(searchLat, searchLng);
-        handleLocalGenerate(searchLat, searchLng);         
+        handleGenerate(myLat, myLng);
+        handleLocalGenerate(myLat, myLng);         
     });
 
     document.getElementById("address").addEventListener("keyup", function(event) {
@@ -101,13 +101,6 @@
             if (status === "OK") {
                 myLatLng = results[0].geometry.location;
                 resultsMap.setCenter(myLatLng);
-            
-                var latLngStr = myLatLng.toString();
-                newLatLng = latLngStr.replace('(','').replace(')','')
-                arrLatLng = newLatLng.split(',')
-                searchLat = parseFloat(arrLatLng[0]).toFixed(9)
-                searchLng = parseFloat(arrLatLng[1]).toFixed(9)
-
             } else {
                 alert("Geocode was not successful for the following reason: " + status);
             }
@@ -116,7 +109,6 @@
 
     const token = document.querySelector('[name=csrfmiddlewaretoken]').value
 
-    // function that fetches response from backend
     function whaleAPI(lat, lng) {
         return fetch("/generate/", {
             method: "POST",
@@ -126,13 +118,10 @@
                 "X-CSRFToken": token
             }),
         }).then(res => {
-            // if (res.ok) return res.json();
-            // throw new Error('Search invalid');
             return res.json()
         }).catch(error => console.log(error))
     }
 
-    // function that awaits for response
     async function handleGenerate(lat, lng) {
         const response = await whaleAPI(lat, lng);
         let data_list = response;
