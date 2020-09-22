@@ -44,7 +44,7 @@
     let markers = [];
     let data_list = []
 
-    function initMap(){
+    function initMap() {
 
         myLatLng = {lat:39.9612,lng:-82.9988}
         searchLat = 39.9612
@@ -81,58 +81,7 @@
             }          
         });
 
-        function addMarker(props){
-            var x = parseFloat(props.lat)
-            var y = parseFloat(props.lng)
-            var marker = new google.maps.Marker({
-            position: { lat: x, lng: y },
-            map: map,
-        });
 
-        markers.push(marker)
-
-        if(props.title){
-            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.title) + "<h4></div>"
-            var sUrl = props.url
-            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + props.url + "'></div>"
-            var infoWindowSighting = new google.maps.InfoWindow({
-            content: sImg + tStr
-        });
-
-        marker.addListener('click', function(){
-            if (activeInfoWindow != null) { activeInfoWindow.close(); }
-            infoWindowSighting.open(map, marker);
-            activeInfoWindow = infoWindowSighting;
-        });
-        }
-        }
-
-    }
-
-    function addDataMarker(props){
-            var x = parseFloat(props.latitude)
-            var y = parseFloat(props.longitude)
-            var marker = new google.maps.Marker({
-            position: { lat: x, lng: y },
-            map: map,
-        });
-
-        markers.push(marker)
-
-        if(props.description){
-            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.description) + "<h4></div>"
-            var sUrl = "https://i.imgur.com/QLa6Vjy.png"
-            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + sUrl + "'></div>"
-            var infoWindowSighting = new google.maps.InfoWindow({
-            content: sImg + tStr
-        });
-
-        marker.addListener('click', function(){
-            if (activeInfoWindow != null) { activeInfoWindow.close(); }
-            infoWindowSighting.open(map, marker);
-            activeInfoWindow = infoWindowSighting;
-        });
-        }
         }
 
 
@@ -208,9 +157,48 @@
         const response = await whaleAPI(lat, lng);
         let data_list = response;
             for(var i=0; i < data_list.length; i++){
-                addDataMarker(data_list[i]);
+                addMarker(data_list[i]);
             }
     }
+
+    function addMarker(props) {
+        if (props.lat) {
+            var x = parseFloat(props.lat)
+            var y = parseFloat(props.lng)
+        }    
+        if (props.latitude) {
+            var x = parseFloat(props.latitude)
+            var y = parseFloat(props.longitude)
+        }
+        var marker = new google.maps.Marker({
+            position: { lat: x, lng: y },
+            map: map,
+        });
+        markers.push(marker)
+        if(props.title) {
+            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.title) + "<h4></div>"
+            var sUrl = props.url
+            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + props.url + "'></div>"
+            var infoWindowSighting = new google.maps.InfoWindow({
+                content: sImg + tStr
+            });
+        }
+        if(props.description) {
+            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.description) + "<h4></div>"
+            var sUrl = "https://i.imgur.com/QLa6Vjy.png"
+            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + sUrl + "'></div>"
+            var infoWindowSighting = new google.maps.InfoWindow({
+                content: sImg + tStr
+            });
+        }
+        marker.addListener('click', function() {
+            if (activeInfoWindow != null) { activeInfoWindow.close(); }
+            infoWindowSighting.open(map, marker);
+            activeInfoWindow = infoWindowSighting;
+        });
+    }
+        
+        
 
     // find Geolocation
     function findGeoLoc() {
