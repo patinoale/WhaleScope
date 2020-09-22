@@ -244,14 +244,14 @@ footer {
   font-family: 'Rajdhani', sans-serif;
 }
 
-.map-submit {
+.map-submit, .data-generate {
   border: 1px solid white;
   background: transparent;
   color: white;
   display: inline;
   margin: 1rem auto;
   min-width: 10px;
-  width: 4rem;
+  width: 7rem;
   height: 2rem;
   padding: .25rem;
   transition: 250ms background ease-in;
@@ -260,7 +260,7 @@ footer {
   font-family: 'Rajdhani', sans-serif;
 }
 
-.map-submit:hover {
+.map-submit:hover, .data-generate:hover {
   background: #c0fdff;
   color: black;
 }
