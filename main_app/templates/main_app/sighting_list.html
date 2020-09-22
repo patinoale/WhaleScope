@@ -15,10 +15,12 @@
   <div class="row">
     <div class="column">
     <div class="card">
-      {% for photo in photos %}
-        <a href="{% url 'detail' object.id %}"><img src="{{photo.url}}" alt="Whale Photo" style="width:100%;"></a>
+      {% for photo in object.photo_set.all %}
+      {% if forloop.first %}
+        <a href="{% url 'detail' object.id %}"><img src="{{photo.url}}" alt="Whale Photo" style="width:100%; height: 15rem;"></a>
+        {% endif %}
         {% empty %}
-        <a href="{% url 'detail' object.id %}"><img src="https://i.imgur.com/QLa6Vjy.png" alt="Whale Photo" style="width:100%;"></a>
+        <a href="{% url 'detail' object.id %}"><img src="https://i.imgur.com/AzyIR4f.png" style="width:100%; height: 15rem;" alt="Whale Photo" style="width:100%;"></a>
         {% endfor %}
             <p style = "text-transform:capitalize;" class="card-title">{{ object.title }}</p> 
             <p style ="text-transform:capitalize;">Posted by: {{ object.user }}</p>
