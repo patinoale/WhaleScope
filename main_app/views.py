@@ -108,6 +108,12 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
+
+@login_required
+def profile(request):
+    sighting = Sighting.objects.filter(user=request.user)
+    return render(request, 'registration/user_profile.html', {'sightings': sighting})
+
 @login_required
 def add_comment(request, pk):
     sighting = get_object_or_404(Sighting, pk=pk)
