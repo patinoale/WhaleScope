@@ -3,13 +3,17 @@
 ### Share Your Adventure
 
 
-People who love whales need a place to obtain info about amazing places to go 
+People who love whales need a place to obtain info about amazing places to go whale watching and share their amazing adventures when they get back.
 
 # Getting Started
 
 # App Inspiration
 
+As avid whale watchers, we sought to create a place for other's to 
+
 # Design Inspiration
+
+We wanted to share the true mysticism and beauty of these majestic creatures.  
 
 # Technologies Used
 
@@ -35,3 +39,19 @@ People who love whales need a place to obtain info about amazing places to go
 # Screenshots of Live App
 ### Landing Page
 ![Live Landing Page](./images/Landing_Page.png)
+
+# Unresolved issues
+1) 
+
+# Future Enhancements
+
+
+# Link to Live App
+Click here to see [WhaleScope]()
+
+# Authors who worked on Version 1
+* Alejandra Patino - [GitHub](https://github.com/patinoale)
+* Brian Kelly - [GitHub](https://github.com/brianjkelly)
+* Chengusoyane Kargbo - [GitHub](https://github.com/ChenguK)
+
+## Acknowledgments
