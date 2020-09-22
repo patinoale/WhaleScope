@@ -20,5 +20,6 @@ urlpatterns = [
     path('sightings/<int:sighting_id>/<int:photo_id>/photos_delete/', views.photos_delete, name='photos_delete'),
     path('map/', views.map, name='map'),
     path('likes/<int:pk>/', views.like_sighting, name='like_sighting'),
+    path('likecomment/<int:pk>/<int:comment_id>/', views.like_comment, name='like_comment'),
     re_path(r'^map/generate', views.generate, name="generate")
 ]

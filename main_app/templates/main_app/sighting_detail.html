@@ -23,11 +23,12 @@
                     <button type="submit" name="sighting_id" style="background-color:transparent; border: none;">
                         {% if liked_it %}
                         <i style="color: #C0FDFF" class='material-icons likes'>thumb_up</i>
+
                         {% else %}
                         <i style="color: grey" class='material-icons likes'>thumb_up</i>
                         {% endif %}
                         {% if total_likes %}
-                        <p style="margin-top: 0;"><small>{{ total_likes }} Likes</small></p>
+                        <p style="margin-top: 0;"><small>{{ total_likes }} Like{{ sighting.total_likes.count|pluralize }}</small></p>
                         {% else %}
                         {% endif %} 
                     </button>
@@ -73,7 +74,23 @@
                                   
                                             <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
                                                 <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
-                                                
+                                                <form action="{% url 'like_comment' sighting.id comment.id %}" method="post">
+                                                    {% csrf_token %} 
+                                                    <button type="submit" name="comment_id" style="background-color:transparent; border: none;">
+                                                        {% if like in comment.likes.all %}
+                                                        <i style="color: #C0FDFF" class='material-icons likes'>thumb_up</i>
+                                                        {% else %}
+                                                        <i style="color: lightgrey" class='material-icons likes'>thumb_up</i>
+                                                        {% endif %}
+                                                        {% if comment.has_likes %}
+                                                        <!-- fix -->
+                                                        <p style="margin-top: 0;"><small>{{ comment.has_likes }} Like{{ comment.has_likes.count|pluralize }}</small></p>
+                                                        {% else %}
+                                                        {% endif %} 
+                                                    </button>
+                                                    
+                                                </form>  
+
 
                                                                  
                     </div>
