@@ -17,6 +17,7 @@ urlpatterns = [
     path('sightings/<int:sighting_id>/<int:comment_id>/comments_delete/', views.comments_delete, name='comments_delete'),
     path('sightings/<int:sighting_id>/<int:comment_id>/<int:reply_id>/replies_delete/', views.replies_delete, name='replies_delete'),
     path('sightings/<int:sighting_id>/<int:comment_id>/add_reply', views.add_reply, name='add_reply'),
+    path('likecomment/<int:pk>/<int:comment_id>/', views.like_comment, name='like_comment'),
     path('sightings/<int:sighting_id>/add_photo/', views.add_photo, name='add_photo'),
     path('sightings/<int:sighting_id>/<int:photo_id>/photos_delete/', views.photos_delete, name='photos_delete'),
     path('map/', views.map, name='map'),
