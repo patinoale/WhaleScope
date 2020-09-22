@@ -28,7 +28,7 @@
     M.FormSelect.init(selectEl);
 </script>
 <div>
-<h3>Click the map below for latitude & longitude:</h3>
+    <h3>Click the map below for latitude & longitude:</h3>
 <style>
     #map {
         height:400px;
@@ -36,26 +36,16 @@
     }
 </style>
 
-
-    <input id="address" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
-    <input id="submit" type ="button" value="Search" />
-
+    <div>
+        <input id="address" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
+        <input id="submit" type ="button" value="Search" />
+    </div>
     <div id="map"></div>
 </div>
 
 <script>
-    var input = document.getElementById("address");
-    input.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            document.getElementById("submit").click();
-        }
-    });
-</script>
-
-<script>
-    let map, infoWindowLatLng;
-    let myLatLng = {lat:34.0522,lng:-118.2437};
+    let map, infoWindowLatLng, geocoder;
+    let myLatLng = {lat:39.9612,lng:-82.9988};
     function initMap(){
         var options = {
             zoom: 8,
@@ -64,7 +54,52 @@
         
         map = new google.maps.Map(document.getElementById('map'), options);
         infoWindow = new google.maps.InfoWindow();
+        geocoder = new google.maps.Geocoder();
+        infoWindowLatLng = new google.maps.InfoWindow(
+            {content: "Click the map to get Lat/Lng!", position: myLatLng}
+        );
+        infoWindowLatLng.open(map);      
+        map.addListener('click', function(event) {
+            infoWindowLatLng.close()
+            infoWindowLatLng = new google.maps.InfoWindow({position: event.latLng});
+            var latLngStr = event.latLng.toString()
+            infoWindowLatLng.setContent(latLngStr);
+            infoWindowLatLng.open(map);
+            newLaLn = latLngStr.replace('(','').replace(')','')
+            arrLaLn = newLaLn.split(',')
+            sLat = parseFloat(arrLaLn[0]).toFixed(9)
+            sLng = parseFloat(arrLaLn[1]).toFixed(9)
+            document.getElementById("id_latitude").value = sLat
+            document.getElementById("id_longitude").value = sLng
+    
+            geocoder.geocode({
+                'latLng': event.latLng
+                }, 
+                function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var addStr = results[0].formatted_address;
+                        document.getElementById("id_location").value = addStr;
+                    }
+                }
+            });
+        });
+    }
+    
+    findGeoLoc();
+    
+    document.getElementById("submit").addEventListener("click", () => {
+        geocodeAddress(geocoder, map);
+    });
+    
+    document.getElementById("address").addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("submit").click();
+        }
+    });
 
+    function findGeoLoc() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 position => {
@@ -84,45 +119,8 @@
         } else {
             handleLocationError(false, infoWindow, map.getCenter());
         }
+    }
 
-        infoWindowLatLng = new google.maps.InfoWindow(
-            {content: "Click the map to get Lat/Lng!", position: myLatLng}
-        );
-
-        infoWindowLatLng.open(map);
-
-        map.addListener('click', function(event) {
-            infoWindowLatLng.close()
-            infoWindowLatLng = new google.maps.InfoWindow({position: event.latLng});
-            var latLngStr = event.latLng.toString()
-            infoWindowLatLng.setContent(latLngStr);
-            infoWindowLatLng.open(map);
-            newLaLn = latLngStr.replace('(','').replace(')','')
-            arrLaLn = newLaLn.split(',')
-            sLat = parseFloat(arrLaLn[0]).toFixed(9)
-            sLng = parseFloat(arrLaLn[1]).toFixed(9)
-            document.getElementById("id_latitude").value = sLat
-            document.getElementById("id_longitude").value = sLng
-
-            geocoder.geocode({
-                'latLng': event.latLng
-            }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        var addStr = results[0].formatted_address;
-                        document.getElementById("id_location").value = addStr;
-                    }
-                }
-            });
-
-        });
-    
-        const geocoder = new google.maps.Geocoder();
-        document.getElementById("submit").addEventListener("click", () => {
-            geocodeAddress(geocoder, map);
-        });
-    }  
-    
     function geocodeAddress(geocoder, resultsMap) {
         const address = document.getElementById("address").value;
         geocoder.geocode({ address: address }, ( results, status ) => {
