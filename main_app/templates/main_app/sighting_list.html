@@ -15,7 +15,7 @@
   <div class="row">
     <div class="column">
     <div class="card">
-      {% for photo in sighting.photo_set.all %}
+      {% for photo in photos %}
         <a href="{% url 'detail' object.id %}"><img src="{{photo.url}}" alt="Whale Photo" style="width:100%;"></a>
         {% empty %}
         <a href="{% url 'detail' object.id %}"><img src="https://i.imgur.com/QLa6Vjy.png" alt="Whale Photo" style="width:100%;"></a>
