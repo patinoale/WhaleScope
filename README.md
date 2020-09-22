@@ -39,15 +39,6 @@ We wanted to share the true mysticism and beauty of these majestic creatures. Wh
 * The Whale Museum Api
 * Heroku for Deployment
 
-# Resolved Issues
-1. The whale sighting api we wanted to use was an api written primarily with javascript. The goal was to display the sightings The Whale Museum Api had recorded on our map. Exchanging data between a javascript front end for the google maps api and a python/django backend required json packaging to make them communicate. Thank you to our instructor, Daniel Scott, for helping us accomplish this goal!! 
-
-![Sightings Map](./images/SightingMap.png)
-
-2.  We had a lot of issues from the beginning of our project pulling in files from each other's computers. It took 3 destroyed branches before we realized that it was a pycache/migration issue. Python creates files to keep track of the changes to files and models. Some changes create pycache files, whereas actual migrations create migration files. Since we are all on different computers, each time we saved things and migrated to our databases, we created records and then passed them to each other. An example would be the filename: 0001_initial. Since each of us had our own initial pycache, they conflicted with each other and broke our code. Once we realized it was our pycache files, we refactored our .gitignore files, rebuilt our features and were ready to continue.
-
-
-
 
 # ERD
 ![ERD](./images/ERD.png)
@@ -80,6 +71,12 @@ We wanted to share the true mysticism and beauty of these majestic creatures. Wh
 ### Sighting's Detail Page
 ![Live Detail Page](./images/Detail_Page.png)
 
+# Resolved Issues
+1. The whale sighting api we wanted to use was an api written primarily with javascript. The goal was to display the sightings The Whale Museum Api had recorded on our map. Exchanging data between a javascript front end for the google maps api and a python/django backend required json packaging to make them communicate. Thank you to our instructor, Daniel Scott, for helping us accomplish this goal!! 
+
+![Sightings Map](./images/Sighting_Map.png)
+
+2.  We had a lot of issues from the beginning of our project pulling in files from each other's computers. It took 3 destroyed branches before we realized that it was a pycache/migration issue. Python creates files to keep track of the changes to files and models. Some changes create pycache files, whereas actual migrations create migration files. Since we are all on different computers, each time we saved things and migrated to our databases, we created records and then passed them to each other. An example would be the filename: 0001_initial. Since each of us had our own initial pycache, they conflicted with each other and broke our code. Once we realized it was our pycache files, we refactored our .gitignore files, rebuilt our features and were ready to continue.
 
 
 # Unresolved issues
