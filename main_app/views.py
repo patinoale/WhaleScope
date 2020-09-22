@@ -189,7 +189,6 @@ def map(request):
     })
 
 
-
 @login_required
 def like_sighting(request, pk):
     sighting = get_object_or_404(Sighting, pk=pk)
@@ -220,7 +219,7 @@ def generate(request):
 def add_reply(request, sighting_id, comment_id):
     sighting = get_object_or_404(Sighting, id=sighting_id)
     comment = get_object_or_404(Comment, id=comment_id)
-    print(sighting_id)
+    
     if request.method == 'POST':
         form = ReplyForm(request.POST)
         if form.is_valid():
