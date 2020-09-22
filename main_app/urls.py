@@ -22,9 +22,6 @@ urlpatterns = [
     path('map/', views.map, name='map'),
     path('generate/', views.generate, name='generate'),
     path('likes/<int:pk>/', views.like_sighting, name='like_sighting'),
-<<<<<<< HEAD
     path('likecomment/<int:pk>/<int:comment_id>/', views.like_comment, name='like_comment'),
     re_path(r'^map/generate', views.generate, name="generate")
-=======
->>>>>>> master
 ]
