@@ -35,7 +35,6 @@
     let data_list = []
 
     function initMap() {
-
         myLatLng = {lat:39.9612,lng:-82.9988}
         searchLat = 39.9612
         searchLng = -82.9988
@@ -203,6 +202,8 @@
                         infoWindow.setContent("Location found.");
                         infoWindow.open(map)
                         map.setCenter(pos);
+                        searchLat = parseFloat(position.coords.latitude).toFixed(9)
+                        searchLng = parseFloat(position.coords.longitude).toFixed(9)
                     },
                     () => {
                         handleLocationError(true, infowWindow, map.getCenter());
