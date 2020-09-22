@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 from . import views
 
+
 urlpatterns = [
     path('', views.home, name='home'),
     path ('about/', views.about, name='about'),
@@ -13,9 +14,12 @@ urlpatterns = [
     path('sightings/<int:pk>/add_comment/', views.add_comment, name='add_comment'),
     path('sightings/<int:pk>/<int:comment_id>/', views.comments_update, name='comments_update'),
     path('sightings/<int:sighting_id>/<int:comment_id>/comments_delete/', views.comments_delete, name='comments_delete'),
+    path('sightings/<int:sighting_id>/<int:comment_id>/<int:reply_id>/replies_delete/', views.replies_delete, name='replies_delete'),
+    path('sightings/<int:sighting_id>/<int:comment_id>/add_reply', views.add_reply, name='add_reply'),
     path('sightings/<int:sighting_id>/add_photo/', views.add_photo, name='add_photo'),
     path('sightings/<int:sighting_id>/<int:photo_id>/photos_delete/', views.photos_delete, name='photos_delete'),
     path('map/', views.map, name='map'),
-    # re_path(r'^generate/api.json%3Fnear=(?P<latlng>-?[0-9]{0,3}.[0-9]{4,},-?[0-9]{0,3}.[0-9]{4,})&radius=100', views.generate, name="generate")
-    path('generate/', views.generate)
+    # re_path(r'^generate/api.json%3Fnear=(?P<latlng>-?[0-9]{0,3}.[0-9]{4,},-?[0-9]{0,3}.[0-9]{4,})&radius=100', views.generate, name="generate"),
+    path('generate/', views.generate, name='generate'),
+    path('likes/<int:pk>/', views.like_sighting, name='like_sighting'),
 ]

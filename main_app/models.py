@@ -39,7 +39,7 @@ class Sighting(models.Model):
         return self.comment_set
 
     def has_likes(self):
-        return self.likes_set
+        return self.likes.count()
 
     def total_likes(self):
         return self.likes.count()
@@ -58,7 +58,10 @@ class Comment(models.Model):
         return reverse('detail', kwargs={'pk': self.id})
 
     def has_likes(self):
-        return self.likes_set
+        return self.likes.count()
+
+    def has_replies(self):
+        return self.reply.count()
 
     class Meta:
         ordering = ['-created_date']
@@ -81,3 +84,6 @@ class Reply(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.text)

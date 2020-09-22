@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, reverse, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Sighting, Comment, Photo
+from .models import *
 from .forms import *
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -49,9 +50,20 @@ class SightingList(LoginRequiredMixin, ListView):
 class SightingDetail(LoginRequiredMixin, DetailView):
     model = Sighting
     
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        liked = get_object_or_404(Sighting, id=self.kwargs['pk'])
+        total_likes = liked.total_likes()
+        liked_it = False
+        if liked.likes.filter(id=self.request.user.id).exists():
+            liked_it = True
+
         context['comment_form'] = CommentForm()
+        context['reply_form'] = ReplyForm()
+        context['total_likes'] = total_likes
+        context['liked_it'] = liked_it
+        
         return context
 
 class SightingCreate(LoginRequiredMixin, CreateView):
@@ -107,6 +119,7 @@ def add_comment(request, pk):
             new_comment.sighting = sighting
             form.save()
             return redirect('detail', pk=sighting.pk)
+        
     else:
         form = CommentForm()
     return render(request, 'detail', {'form': form})
@@ -169,6 +182,20 @@ def map(request):
         'GOOGLE_API_KEY': settings.GOOGLE_API_KEY
     })
 
+
+
+@login_required
+def like_sighting(request, pk):
+    sighting = get_object_or_404(Sighting, pk=pk)
+    liked_it = False
+    if sighting.likes.filter(id=request.user.id).exists():
+        sighting.likes.remove(request.user)
+        liked_it = False
+    else:
+        sighting.likes.add(request.user)
+        liked_it = True
+    return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
+
 def generate(request):
     lat = json.loads(request.body.decode('utf-8')).get('lat')
     lng = json.loads(request.body.decode('utf-8')).get('lng')
@@ -179,7 +206,33 @@ def generate(request):
     try:
         r = requests.get(newURL).json()
         return HttpResponse(json.dumps(r), content_type="application/json")
-
     except: 
         pass
+
+
+@login_required
+def add_reply(request, sighting_id, comment_id):
+    sighting = get_object_or_404(Sighting, id=sighting_id)
+    comment = get_object_or_404(Comment, id=comment_id)
+    print(sighting_id)
+    if request.method == 'POST':
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            new_reply = form.save(commit=False)
+            new_reply.user = request.user
+            new_reply.comment = comment
+            form.save()
+            return redirect('detail', sighting_id)
         
+    else:
+        form = ReplyForm()
+    return render(request, 'detail', {'form': form})
+
+@login_required
+def replies_delete(request, sighting_id, comment_id, reply_id):
+    context={}
+    obj = get_object_or_404(Reply, id=reply_id)
+
+    if request.method == 'GET':
+        obj.delete()
+        return redirect('detail', sighting_id)
