@@ -41,6 +41,7 @@
 <script>
     let map, infoWindow, myLatLng, searchLat, searchLng, api_sightings_list;
     let activeInfoWindow = null;
+    let markers = [];
 
     function initMap(){
 
@@ -80,18 +81,20 @@
         document.getElementById("search").addEventListener("click", () => {
             geocodeAddress(geocoder, map);
         });
-
-        
         
         document.getElementById("generate").addEventListener("click", () => {
+            deleteMarkers();
             for(var i=0; i < sightings_list.length; i++){
                 cLat = parseFloat(sightings_list[i].lat)
                 cLng = parseFloat(sightings_list[i].lng)
-                console.log(cLat,cLng)
 
-                addMarker(sightings_list[i]);
+                if (cLat >= (parseFloat(searchLat) - 2) && cLat <= (parseFloat(searchLat) + 2)) {
+                    if (cLng >= (parseFloat(searchLng) - 2) && cLng <= (parseFloat(searchLng) + 2)) {
+                        addMarker(sightings_list[i]);
+                    }
+                }
             }
-        })
+        });
 
         function addMarker(props){
             var x = parseFloat(props.lat)
@@ -100,6 +103,8 @@
             position: { lat: x, lng: y },
             map: map,
         });
+
+        markers.push(marker)
 
         if(props.title){
             var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.title) + "<h4></div>"
@@ -116,6 +121,22 @@
         });
         }
         }
+
+    }
+
+    function setMapOnAll(map) {
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
     }
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
