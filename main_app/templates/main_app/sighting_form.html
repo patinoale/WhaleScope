@@ -7,13 +7,13 @@
     <h1>Add Sighting</h1>
 {% endif %}
 
-
+<p>Fill in the input fields below with a title, date, and description for your whale sighting. Make sure to select a species!<br/>And don't stress out about the latitude and longitude. We got you!<br/>Just click on the map below wherever your whale sighting occurrred and the input fields will automatically populate with the correct coordinates.<br/>Double check that you like the location name and then click that 'Submit' button to add another dope scope to your collection. Gnarly!</p>
+<div class="sighting-container">
 <form action="" class="sighting-form" method="post">
     <h2>Add Your Sighting</h2>
     {% csrf_token  %}        
         <input class="sighting-input"  placeholder="Title"type="text" name="title" maxlength="100" required="" id="id_title">
         <input class="sighting-input" placeholder="Latitude" type="number" name="latitude" step="1e-9" required="" id="id_latitude"> 
-        <input class="sighting-input" placeholder="Longitude" type="number" name="longitude" step="1e-9" required="" id="id_longitude"> 
         <input class="sighting-input" placeholder="Longitude" type="number" name="longitude" step="1e-9" required="" id="id_longitude"> 
         <input  class="sighting-input" placeholder="Location" type="text" name="location" maxlength="100" required="" id="id_location"> 
         <textarea class= "sighting-description" placeholder="Sighting Description (max length 500 characters)" name="description" cols="40" rows="10" maxlength="500" required="" id="id_description"></textarea>
@@ -38,24 +38,24 @@
         </select><br/>
             <input class="login-submit" type="submit" value="Submit!" class="btn">
 </form>
-<form action="" class="sighting-form">
-<div>
-    <h3>Click the map below for latitude & longitude:</h3>
+<form action="" class="map-container">
+    <h3>Click the map for latitude & longitude:</h3>
 <style>
     #map {
         height:400px;
-        width:400px;
+        width:600px;
         margin-right: 33%;
     }
 </style>
 
     <div>
-        <input id="address" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
-        <input id="submit" type ="button" value="Search" />
+        <input id="address" class="location-input" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
+        <input id="submit" class="location-submit"  type ="button" value="Search" />
     </div>
     <div id="map"></div>
-</div>
+
 </form>
+</div>
 
 <script>
     let map, infoWindowLatLng, geocoder;

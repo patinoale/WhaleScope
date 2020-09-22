@@ -298,10 +298,6 @@ footer {
     margin-bottom: 20px;
   }
 }
-  /* .clicked {
-    background-color: #C0FDFF
-  } */
-
 
 .card:hover {
   background: #c0fdff;
@@ -326,7 +322,7 @@ div.gm-style-iw-d {
 .sighting-form {
   background: rgb(1, 15, 30);
   box-shadow: 0 0 1rem #c0fdff;
-  height: 550px;
+  height: 520px;
   margin-top: 3.75rem;
   margin-left: 10rem;
   width: 370px;
@@ -358,7 +354,7 @@ div.gm-style-iw-d {
 }
 
 .sighting-description {
-  height: 80px;
+  height: 115px;
   width: 20.7rem;
   font-family: 'Rajdhani', sans-serif;
   font-size: 15px;
@@ -374,6 +370,55 @@ div.gm-style-iw-d {
   padding: .5rem;
 }
 
+.map-container {
+  background: rgb(1, 15, 30);
+  box-shadow: 0 0 1rem #c0fdff;
+  height: 520px;
+  margin-top: 3.75rem;
+  margin-left: 5rem;
+  margin-bottom: 3rem;
+  width: 600px;
+  padding: 2rem;
+}
+
+.sighting-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.location-submit {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 6rem;
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.location-submit:hover {
+  background: #c0fdff;
+  color: black;
+}
+
+.location-input {
+    background: white;
+    border: 0 solid;
+    border-bottom: 1px solid rgba(white, .5);
+    color: rgb(20, 19, 19);
+    margin: .75rem;
+    padding: .5rem;
+    transition: 250ms background ease-in;
+    width: 15rem;
+    height: 1rem;
+    font-size: 20px;
+    font-family: 'Rajdhani', sans-serif;
+}
 
 
 
