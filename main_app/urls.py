@@ -20,7 +20,6 @@ urlpatterns = [
     path('sightings/<int:sighting_id>/add_photo/', views.add_photo, name='add_photo'),
     path('sightings/<int:sighting_id>/<int:photo_id>/photos_delete/', views.photos_delete, name='photos_delete'),
     path('map/', views.map, name='map'),
-    # re_path(r'^generate/api.json%3Fnear=(?P<latlng>-?[0-9]{0,3}.[0-9]{4,},-?[0-9]{0,3}.[0-9]{4,})&radius=100', views.generate, name="generate"),
     path('generate/', views.generate, name='generate'),
     path('likes/<int:pk>/', views.like_sighting, name='like_sighting'),
 ]
