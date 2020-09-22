@@ -49,7 +49,7 @@ We wanted to share the true mysticism and beauty of these majestic creatures.
 # Link to Live App
 Click here to see [WhaleScope]()
 
-# Authors who worked on Version 1
+# Developers who worked on Version 1
 * Alejandra Patino - [GitHub](https://github.com/patinoale)
 * Brian Kelly - [GitHub](https://github.com/brianjkelly)
 * Chengusoyane Kargbo - [GitHub](https://github.com/ChenguK)
