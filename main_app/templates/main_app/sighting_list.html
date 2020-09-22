@@ -17,6 +17,7 @@
     <div class="card">
       {% for photo in photos %}
         <a href="{% url 'detail' object.id %}"><img src="{{photo.url}}" alt="Whale Photo" style="width:100%;"></a>
+        {% endif %}
         {% empty %}
         <a href="{% url 'detail' object.id %}"><img src="https://i.imgur.com/QLa6Vjy.png" alt="Whale Photo" style="width:100%;"></a>
         {% endfor %}
