@@ -39,19 +39,23 @@
 <hr>
 <div>
     {% for photo in sighting.photo_set.all %}
-        <img class="whale-photo" src="{{photo.url}}">
-        <br>
-        <a href="{% url 'photos_delete' sighting.id photo.id %}">DELETE PHOTO</a>
+    <img class="whale-photo" src="{{photo.url}}">
+    <br>
+        {% if user == sighting.user %}
+            <a href="{% url 'photos_delete' sighting.id photo.id %}">DELETE PHOTO</a>
+        {% endif %}
     {% empty %}
         <div class="card-panel teal-text center-align">No Photos Uploaded</div>
     {% endfor %}
-
+    {% if user == sighting.user %}
     <form action="{% url 'add_photo' object.id %}" enctype="multipart/form-data" method="post" class="card-panel">
         {% csrf_token %}
         <input type="file" name="photo-file">
         <br><br>
         <input type="submit" value="Upload Photo" class="btn">
     </form>
+    {% endif %} 
+   
 </div>
 <hr>
 <div class="row" id="comment_section">
