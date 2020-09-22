@@ -14,8 +14,12 @@
 {% for object in object_list %}
   <div class="row">
     <div class="column">
-      <div class="card">
-        <a href="{% url 'detail' object.id %}"><img src="https://i.imgur.com/AzyIR4f.png" alt="Whale Photo" style="width:100%;"></a>
+    <div class="card">
+      {% for photo in photos %}
+        <a href="{% url 'detail' object.id %}"><img src="{{photo.url}}" alt="Whale Photo" style="width:100%;"></a>
+        {% empty %}
+        <a href="{% url 'detail' object.id %}"><img src="https://i.imgur.com/QLa6Vjy.png" alt="Whale Photo" style="width:100%;"></a>
+        {% endfor %}
             <p style = "text-transform:capitalize;" class="card-title">{{ object.title }}</p> 
             <p style ="text-transform:capitalize;">Posted by: {{ object.user }}</p>
             <p>Location: {{ object.location }}</p>

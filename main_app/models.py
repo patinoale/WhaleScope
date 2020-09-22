@@ -3,17 +3,22 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 WHALE_SPECIES = (
-    ('1', 'Orca'),
-    ('2', 'Minke'),
-    ('3', 'Humpback'),
-    ('4', 'Dolphin'),
-    ('5', 'Seal'),
-    ('6', 'Sea Lion'),
-    ('7', 'Sea Otter'),
-    ('8', 'Other'),
-    ('9', 'Unknown')
+    ('1', 'Select Species'),
+    ('2', 'Orca'),
+    ('3', 'Minke'),
+    ('4', 'Humpback'),
+    ('5', 'Blue'),
+    ('6', 'Sperm'),
+    ('7', 'Beluga'),
+    ('8', 'Gray'),
+    ('9', 'Fin'),
+    ('10', 'Dolphin'),
+    ('11', 'Seal'),
+    ('12', 'Sea Lion'),
+    ('13', 'Sea Otter'),
+    ('14', 'Other'),
+    ('15', 'Unknown')
 )
-
 class Sighting(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField('sighting date')
@@ -23,7 +28,7 @@ class Sighting(models.Model):
     description = models.TextField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     species = models.CharField(
-        max_length=1,
+        max_length=2,
         choices=WHALE_SPECIES,
         default=WHALE_SPECIES[0][0]
     )
