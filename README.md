@@ -2,7 +2,7 @@
 
 ### Share Your Adventure
 
-WhaleScope is an app where avid whale watchers can share their latest sightings and use other user's sightings to plan for future trips.
+WhaleScope is an app where avid whale watchers can share their latest sightings and use other user's sightings to plan future trips.
 
 # Getting Started
 
@@ -15,11 +15,11 @@ WhaleScope is an app where avid whale watchers can share their latest sightings 
 
 # App Inspiration
 
-People who love whales need a place to obtain info about the best places to go whale watching and share their amazing adventures when they get back.
+People who love whales need a place to obtain info about the best places to go whale watching and share their amazing adventures when they get back. 
 
 # Design Inspiration
 
-We wanted to share the true mysticism and beauty of these majestic creatures. Where better to show them, then in their natural habitat. We aim to invoke the feeling of swimming with the whales while celebrating their magnificence.
+We wanted to share the true mysticism and beauty of these majestic creatures. Where better to show them then in their natural habitat. We aim to invoke the feeling of swimming with the whales while celebrating their magnificence.
  
 # Languages Used
 * Python
@@ -40,10 +40,12 @@ We wanted to share the true mysticism and beauty of these majestic creatures. Wh
 * Heroku for Deployment
 
 # Resolved Issues
-1) The main whale sighting api we wanted to use was an api written primarily with javascript. The go
-Regex was needed to connect the two languages. Thank you to our instructor, Daniel Scott, for helping accomplish this goal!!
+1) The main whale sighting api we wanted to use was an api written primarily with javascript. The goal was to display the sightings The Whale Museum Api had recorded on our map. Regex was needed to connect the two languages. Thank you to our instructor, Daniel Scott, for helping accomplish this goal!!
+
+![Sighting Map](./images/SightingMap.png)
 
 2) 
+
 
 # ERD
 ![ERD](./images/ERD.png)
@@ -54,7 +56,7 @@ Regex was needed to connect the two languages. Thank you to our instructor, Dani
 
 # Wire Frames
 
-### Landing Screen
+### Planned Landing Screen
 ![Landing Page](./images/WireFrameLandingPage.jpeg)
 
 ### Planned Index Page
@@ -81,7 +83,7 @@ We got stuck trying to pass the information through pipelines and items.py. It w
 
 We attempted to pivot to a newsfeed, but there were too many other features that still needed to be built to continue with this.
 
-2) As for the photos in the comments, we just ran out of time. Hopefully we will be able to complete this in future versions.
+2) As for the photos in the comments, we ran out of time before our deadline. Hopefully we will be able to complete this in future versions.
 
 # Future Enhancements
 
