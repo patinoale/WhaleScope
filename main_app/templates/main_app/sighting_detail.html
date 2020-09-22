@@ -81,14 +81,13 @@
                                                 <form action="{% url 'like_comment' sighting.id comment.id %}" method="post">
                                                     {% csrf_token %} 
                                                     <button type="submit" name="comment_id" style="background-color:transparent; border: none;">
-                                                        {% if like in comment.likes.all %}
-                                                        <i style="color: #C0FDFF" class='material-icons likes'>thumb_up</i>
+                                                        {% if request.user == comment.likes.user %} 
+                                                        <i style="color: #C0FDFF; border: none;" class='material-icons likes'>thumb_up</i>
                                                         {% else %}
-                                                        <i style="color: lightgrey" class='material-icons likes'>thumb_up</i>
+                                                        <i style="color: lightgrey; border: none;" class='material-icons likes'>thumb_up</i>
                                                         {% endif %}
                                                         {% if comment.has_likes %}
-                                                        <!-- fix -->
-                                                        <p style="margin-top: 0;"><small>{{ comment.has_likes }} Like{{ comment.has_likes.count|pluralize }}</small></p>
+                                                        <p style="margin-top: 0; color: white"><small>{{ comment.has_likes }} Like{{ comment.has_likes.count|pluralize }}</small></p>
                                                         {% else %}
                                                         {% endif %} 
                                                     </button>

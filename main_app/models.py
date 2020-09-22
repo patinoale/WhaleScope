@@ -43,9 +43,6 @@ class Sighting(models.Model):
     def has_comments(self):
         return self.comment_set
 
-    def has_likes(self):
-        return self.likes.count()
-
     def total_likes(self):
         return self.likes.count()
 
