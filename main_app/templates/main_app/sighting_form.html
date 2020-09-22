@@ -45,10 +45,6 @@
 </div>
 
 <script>
-    
-</script>
-
-<script>
     let map, infoWindowLatLng, geocoder;
     let myLatLng = {lat:39.9612,lng:-82.9988};
     function initMap(){
@@ -60,13 +56,10 @@
         map = new google.maps.Map(document.getElementById('map'), options);
         infoWindow = new google.maps.InfoWindow();
         geocoder = new google.maps.Geocoder();
-
         infoWindowLatLng = new google.maps.InfoWindow(
             {content: "Click the map to get Lat/Lng!", position: myLatLng}
         );
-
-        infoWindowLatLng.open(map);
-
+        infoWindowLatLng.open(map);      
         map.addListener('click', function(event) {
             infoWindowLatLng.close()
             infoWindowLatLng = new google.maps.InfoWindow({position: event.latLng});
@@ -79,7 +72,7 @@
             sLng = parseFloat(arrLaLn[1]).toFixed(9)
             document.getElementById("id_latitude").value = sLat
             document.getElementById("id_longitude").value = sLng
-
+    
             geocoder.geocode({
                 'latLng': event.latLng
                 }, 
@@ -91,15 +84,15 @@
                     }
                 }
             });
-        });      
-    }  
-
+        });
+    }
+    
     findGeoLoc();
     
     document.getElementById("submit").addEventListener("click", () => {
         geocodeAddress(geocoder, map);
     });
-
+    
     document.getElementById("address").addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
