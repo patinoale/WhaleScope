@@ -77,7 +77,7 @@
                                         {% if user == comment.user %}
                                             <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
                                                 <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
-                                        {% endif %}
+                                                {% endif %}
                                                 <form action="{% url 'like_comment' sighting.id comment.id %}" method="post">
                                                     {% csrf_token %} 
                                                     <button type="submit" name="comment_id" style="background-color:transparent; border: none;">
@@ -110,7 +110,9 @@
                         {% for reply in comment.reply_set.all %}
                         <div class="card-panel teal" style="width: 70%;">
                             <div style="display: inline-flex; color: white">{{ reply.text }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;">  {{ reply.user }}</div>
+                            {% if user == reply.user %}
                             <a href="{% url 'replies_delete' sighting.id comment.id reply.id %}">🚯</a>
+                            {% endif %}
                             {% endfor %}   
                         </div>
                             <div id="edit_field_{{ comment.id }}" class="edit_field">
