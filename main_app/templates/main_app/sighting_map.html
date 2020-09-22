@@ -23,28 +23,18 @@
 <div id="map"></div>
 
 <script>
-    var input = document.getElementById("address");
-    input.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            document.getElementById("search").click();
-        }
-    });
-</script>
-
-<script>
     {% autoescape off %}
     var sightings_list = {{ sightings }}
     {% endautoescape %}
 </script>
 
 <script>
-    let map, infoWindow, myLatLng, searchLat, searchLng;
+    let map, infoWindow, geocoder, myLatLng, searchLat, searchLng;
     let activeInfoWindow = null;
     let markers = [];
     let data_list = []
 
-    function initMap(){
+    function initMap() {
 
         myLatLng = {lat:39.9612,lng:-82.9988}
         searchLat = 39.9612
@@ -57,103 +47,28 @@
         
         map = new google.maps.Map(document.getElementById('map'), options);
         infoWindow = new google.maps.InfoWindow();
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                position => {
-                    const pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    infoWindow.setPosition(pos);
-                    infoWindow.setContent("Location found.");
-                    infoWindow.open(map)
-                    map.setCenter(pos);
-                },
-                () => {
-                    handleLocationError(true, infowWindow, map.getCenter());
-                }
-            );
-        } else {
-            handleLocationError(false, infoWindow, map.getCenter());
-        }
-
-        const geocoder = new google.maps.Geocoder();
-        document.getElementById("search").addEventListener("click", () => {
-            geocodeAddress(geocoder, map);
-        });
-        
-        document.getElementById("generate").addEventListener("click", () => {
-            deleteMarkers();
-            for(var i=0; i < sightings_list.length; i++){
-                cLat = parseFloat(sightings_list[i].lat)
-                cLng = parseFloat(sightings_list[i].lng)
-
-                if (cLat >= (parseFloat(searchLat) - 2) && cLat <= (parseFloat(searchLat) + 2)) {
-                    if (cLng >= (parseFloat(searchLng) - 2) && cLng <= (parseFloat(searchLng) + 2)) {
-                        addMarker(sightings_list[i]);
-                    }
-                }
-            }
-            handleGenerate(searchLat, searchLng);
-            
-        });
-
-        function addMarker(props){
-            var x = parseFloat(props.lat)
-            var y = parseFloat(props.lng)
-            var marker = new google.maps.Marker({
-            position: { lat: x, lng: y },
-            map: map,
-        });
-
-        markers.push(marker)
-
-        if(props.title){
-            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.title) + "<h4></div>"
-            var sUrl = props.url
-            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + props.url + "'></div>"
-            var infoWindowSighting = new google.maps.InfoWindow({
-            content: sImg + tStr
-        });
-
-        marker.addListener('click', function(){
-            if (activeInfoWindow != null) { activeInfoWindow.close(); }
-            infoWindowSighting.open(map, marker);
-            activeInfoWindow = infoWindowSighting;
-        });
-        }
-        }
-
+        geocoder = new google.maps.Geocoder();
+    
     }
+    
+    findGeoLoc();
+    
+    document.getElementById("search").addEventListener("click", () => {
+        geocodeAddress(geocoder, map);
+    });
+    
+    document.getElementById("generate").addEventListener("click", () => {
+        deleteMarkers();
+        handleGenerate(searchLat, searchLng);
+        handleLocalGenerate(searchLat, searchLng);         
+    });
 
-    function addDataMarker(props){
-            var x = parseFloat(props.latitude)
-            var y = parseFloat(props.longitude)
-            var marker = new google.maps.Marker({
-            position: { lat: x, lng: y },
-            map: map,
-        });
-
-        markers.push(marker)
-
-        if(props.description){
-            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.description) + "<h4></div>"
-            var sUrl = "https://i.imgur.com/QLa6Vjy.png"
-            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + sUrl + "'></div>"
-            var infoWindowSighting = new google.maps.InfoWindow({
-            content: sImg + tStr
-        });
-
-        marker.addListener('click', function(){
-            if (activeInfoWindow != null) { activeInfoWindow.close(); }
-            infoWindowSighting.open(map, marker);
-            activeInfoWindow = infoWindowSighting;
-        });
+    document.getElementById("address").addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("search").click();
         }
-        }
-
-
+    });
 
     function setMapOnAll(map) {
         for (let i = 0; i < markers.length; i++) {
@@ -199,10 +114,6 @@
         });
     }
 
-</script>
-
-<script>
-
     const token = document.querySelector('[name=csrfmiddlewaretoken]').value
 
     // function that fetches response from backend
@@ -226,9 +137,81 @@
         const response = await whaleAPI(lat, lng);
         let data_list = response;
             for(var i=0; i < data_list.length; i++){
-                addDataMarker(data_list[i]);
+                addMarker(data_list[i]);
             }
     }
+
+    function handleLocalGenerate(lat1, lng1) {
+        for(var i=0; i < sightings_list.length; i++) {
+            cLat = parseFloat(sightings_list[i].lat)
+            cLng = parseFloat(sightings_list[i].lng)
+            if (cLat >= (parseFloat(lat1) - 2) && cLat <= (parseFloat(lat1) + 2)) {
+                if (cLng >= (parseFloat(lng1) - 2) && cLng <= (parseFloat(lng1) + 2)) {
+                    addMarker(sightings_list[i]);
+                }
+            }
+        }
+    }
+
+    function addMarker(props) {
+        if (props.lat) {
+            var x = parseFloat(props.lat)
+            var y = parseFloat(props.lng)
+        }    
+        if (props.latitude) {
+            var x = parseFloat(props.latitude)
+            var y = parseFloat(props.longitude)
+        }
+        var marker = new google.maps.Marker({
+            position: { lat: x, lng: y },
+            map: map,
+        });
+        markers.push(marker)
+        if(props.title) {
+            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.title) + "<h4></div>"
+            var sUrl = props.url
+            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + props.url + "'></div>"
+            var infoWindowSighting = new google.maps.InfoWindow({
+                content: sImg + tStr
+            });
+        }
+        if(props.description) {
+            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.description) + "<h4></div>"
+            var sUrl = "https://i.imgur.com/QLa6Vjy.png"
+            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + sUrl + "'></div>"
+            var infoWindowSighting = new google.maps.InfoWindow({
+                content: sImg + tStr
+            });
+        }
+        marker.addListener('click', function() {
+            if (activeInfoWindow != null) { activeInfoWindow.close(); }
+            infoWindowSighting.open(map, marker);
+            activeInfoWindow = infoWindowSighting;
+        });
+    }
+    
+    // find Geolocation
+    function findGeoLoc() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        infoWindow.setPosition(pos);
+                        infoWindow.setContent("Location found.");
+                        infoWindow.open(map)
+                        map.setCenter(pos);
+                    },
+                    () => {
+                        handleLocationError(true, infowWindow, map.getCenter());
+                    }
+                );
+            } else {
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
 
 </script>
 
