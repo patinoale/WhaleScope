@@ -58,33 +58,20 @@
         map = new google.maps.Map(document.getElementById('map'), options);
         infoWindow = new google.maps.InfoWindow();
         geocoder = new google.maps.Geocoder();
-
-        findGeoLoc();
-
-        
-
-        document.getElementById("search").addEventListener("click", () => {
-            geocodeAddress(geocoder, map);
-        });
-        
-        document.getElementById("generate").addEventListener("click", () => {
-            deleteMarkers();
-            handleGenerate(searchLat, searchLng);
-            for(var i=0; i < sightings_list.length; i++){
-                cLat = parseFloat(sightings_list[i].lat)
-                cLng = parseFloat(sightings_list[i].lng)
-                if (cLat >= (parseFloat(searchLat) - 2) && cLat <= (parseFloat(searchLat) + 2)) {
-                    if (cLng >= (parseFloat(searchLng) - 2) && cLng <= (parseFloat(searchLng) + 2)) {
-                        addMarker(sightings_list[i]);
-                    }
-                }
-            }          
-        });
-
-
-        }
-
-
+    
+    }
+    
+    findGeoLoc();
+    
+    document.getElementById("search").addEventListener("click", () => {
+        geocodeAddress(geocoder, map);
+    });
+    
+    document.getElementById("generate").addEventListener("click", () => {
+        deleteMarkers();
+        handleGenerate(searchLat, searchLng);
+        handleLocalGenerate(searchLat, searchLng);         
+    });
 
     function setMapOnAll(map) {
         for (let i = 0; i < markers.length; i++) {
@@ -130,10 +117,6 @@
         });
     }
 
-</script>
-
-<script>
-
     const token = document.querySelector('[name=csrfmiddlewaretoken]').value
 
     // function that fetches response from backend
@@ -159,6 +142,18 @@
             for(var i=0; i < data_list.length; i++){
                 addMarker(data_list[i]);
             }
+    }
+
+    function handleLocalGenerate(lat1, lng1) {
+        for(var i=0; i < sightings_list.length; i++) {
+            cLat = parseFloat(sightings_list[i].lat)
+            cLng = parseFloat(sightings_list[i].lng)
+            if (cLat >= (parseFloat(lat1) - 2) && cLat <= (parseFloat(lat1) + 2)) {
+                if (cLng >= (parseFloat(lng1) - 2) && cLng <= (parseFloat(lng1) + 2)) {
+                    addMarker(sightings_list[i]);
+                }
+            }
+        }
     }
 
     function addMarker(props) {
