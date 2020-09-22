@@ -241,3 +241,19 @@ def replies_delete(request, sighting_id, comment_id, reply_id):
     if request.method == 'GET':
         obj.delete()
         return redirect('detail', sighting_id)
+
+
+@login_required
+def like_comment(request, pk, comment_id):
+    sighting = get_object_or_404(Sighting, pk=pk)
+    if request.method == 'POST':
+        if comment_id:
+            comment = get_object_or_404(Comment, id=comment_id)
+            like = False
+            if comment.likes.filter(id=request.user.id).exists():
+                comment.likes.remove(request.user)
+                like = False
+            else:
+                comment.likes.add(request.user)
+                like = True
+    return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
