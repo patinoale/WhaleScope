@@ -46,28 +46,6 @@ def add_photo(request, sighting_id):
 
 class SightingList(LoginRequiredMixin, ListView):
     model = Sighting
-    
-    user_sightings = Sighting.objects.all()
-    sighting_list = []
-
-    for s in user_sightings:
-        s_photo = Photo.objects.filter(sighting_id=s.id).first()
-        
-        if s_photo == None:
-            s_url = "https://i.imgur.com/AzyIR4f.png"
-        else:
-            s_url = s_photo.url
-
-        new_sighting = {
-            'id': s.id,
-            'url': str(s_url)
-        }
-        sighting_list.append(new_sighting)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['sighting_list'] = sighting_list
-        return context
 
 class SightingDetail(LoginRequiredMixin, DetailView):
     model = Sighting
