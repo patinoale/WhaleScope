@@ -241,7 +241,6 @@ def replies_delete(request, sighting_id, comment_id, reply_id):
     if request.method == 'GET':
         obj.delete()
         return redirect('detail', sighting_id)
-<<<<<<< HEAD
 
 @login_required
 def like_comment(request, pk, comment_id):
@@ -257,5 +256,3 @@ def like_comment(request, pk, comment_id):
                 comment.likes.add(request.user)
                 like = True
     return HttpResponseRedirect(reverse('detail', args=[str(pk)]))
-=======
->>>>>>> master
