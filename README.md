@@ -25,10 +25,10 @@ We wanted to share the true mysticism and beauty of these majestic creatures. Wh
 * Python
 * JQuery
 * Javascript
-* Regex
 * Html
 
 # Technologies Used
+* Json
 * Django
 * PostgreSQL
 * Boto3
@@ -40,11 +40,13 @@ We wanted to share the true mysticism and beauty of these majestic creatures. Wh
 * Heroku for Deployment
 
 # Resolved Issues
-1) The main whale sighting api we wanted to use was an api written primarily with javascript. The goal was to display the sightings The Whale Museum Api had recorded on our map. Regex was needed to connect the two languages. Thank you to our instructor, Daniel Scott, for helping accomplish this goal!!
+1. The whale sighting api we wanted to use was an api written primarily with javascript. The goal was to display the sightings The Whale Museum Api had recorded on our map. Exchanging data between a javascript front end for the google maps api and a python/django backend required json packaging to make them communicate. Thank you to our instructor, Daniel Scott, for helping us accomplish this goal!! 
 
-![Sighting Map](./images/SightingMap.png)
+![Sightings Map](./images/SightingMap.png)
 
-2) 
+2.  We had a lot of issues from the beginning of our project pulling in files from each other's computers. It took 3 destroyed branches before we realized that it was a pycache/migration issue. Python creates files to keep track of the changes to files and models. Some changes create pycache files, whereas actual migrations create migration files. Since we are all on different computers, each time we saved things and migrated to our databases, we created records and then passed them to each other. An example would be the filename: 0001_initial. Since each of us had our own initial pycache, they conflicted with each other and broke our code. Once we realized it was our pycache files, we refactored our .gitignore files, rebuilt our features and were ready to continue.
+
+
 
 
 # ERD
@@ -52,7 +54,6 @@ We wanted to share the true mysticism and beauty of these majestic creatures. Wh
 
 # Trello Board
 ![Trello Board](./images/Trello_Board.png)
-
 
 # Wire Frames
 
@@ -69,30 +70,40 @@ We wanted to share the true mysticism and beauty of these majestic creatures. Wh
 ### Landing Page
 ![Live Landing Page](./images/Landing_Page.png)
 
-# Unresolved issues
-On our Trello Board, we initially planned to be able to show users recent whale news as well as allow users to post photos in the comments. 
+### Sighting's Index Page
+![Live Index Page](./images/Index_Page.png)
 
-1) The whale news was going to populated by a webcrawler. We used the Scrapy framework and were able to get the 'spiders' to crawl though several websites and bring back information
+
+### Sighting's Detail Page
+![Live Detail Page](./images/Detail_Page.png)
+
+
+
+# Unresolved issues
+
+1) We wanted to have whale news that was aggregated by a webcrawler. We used the Scrapy framework and were able to get the 'spiders' to crawl though several websites and bring back information.
 
 ### Webcrawler Terminal
 ![Webcrawler Terminal](./images/WebcrawlerTerminal.png)
 ### Crawled Response 
 ![Crawled Response](./images/Crawled_Response.png)
 
-We got stuck trying to pass the information through pipelines and items.py. It would need to pass through these files to be able to create a file django would be able to display. By the time we got this part completed, there was not enough time to finish the process.
+We got stuck trying to pass the information through pipelines and items. It would need to pass through these files to be able to create a file django would be able to display. By the time we got this part completed, there was not enough time to finish the process.
 
-We attempted to pivot to a newsfeed, but there were too many other features that still needed to be built to continue with this.
+We attempted to pivot to a newsfeed, but there were too many other features that still needed to be built to continue with that plan.
 
 2) As for the photos in the comments, we ran out of time before our deadline. Hopefully we will be able to complete this in future versions.
 
+3) We originally planned to have a video playing on our landing page. Our backup option being animating pictures. Neither option worked well with the django framework. However, necessity being the mother of invention, we were able to find a gorgeous picture that brings our app to life.
+
 # Future Enhancements
 
-In the future, we would like to build the webcrawler and aggregate news about whales and other underwater mammels in a sidebar.
+In the future, we would like to be able to build the webcrawler and aggregate news about whales and other underwater mammels in a sidebar.
 
 # Link to Live App
 Click here to see [WhaleScope]()
 
-# Authors who worked on Version 1
+# Developers who worked on Version 1
 * Alejandra Patino - [GitHub](https://github.com/patinoale)
 * Brian Kelly - [GitHub](https://github.com/brianjkelly)
 * Chengusoyane Kargbo - [GitHub](https://github.com/ChenguK)
