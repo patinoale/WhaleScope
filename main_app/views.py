@@ -200,7 +200,7 @@ def generate(request):
     lat = json.loads(request.body.decode('utf-8')).get('lat')
     lng = json.loads(request.body.decode('utf-8')).get('lng')
     rootURL = "http://hotline.whalemuseum.org/"
-    searchURL = "api.json?near=" + lat + "," + lng + "&radius=100"
+    searchURL = "api.json?near=" + lat + "," + lng + "&radius=3"
     newURL = rootURL + searchURL
     print('Running search...')
     try:

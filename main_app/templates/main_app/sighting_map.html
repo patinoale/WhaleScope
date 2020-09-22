@@ -39,9 +39,10 @@
 </script>
 
 <script>
-    let map, infoWindow, myLatLng, searchLat, searchLng, api_sightings_list;
+    let map, infoWindow, myLatLng, searchLat, searchLng;
     let activeInfoWindow = null;
     let markers = [];
+    let data_list = []
 
     function initMap(){
 
@@ -94,6 +95,8 @@
                     }
                 }
             }
+            handleGenerate(searchLat, searchLng);
+            
         });
 
         function addMarker(props){
@@ -123,6 +126,34 @@
         }
 
     }
+
+    function addDataMarker(props){
+            var x = parseFloat(props.latitude)
+            var y = parseFloat(props.longitude)
+            var marker = new google.maps.Marker({
+            position: { lat: x, lng: y },
+            map: map,
+        });
+
+        markers.push(marker)
+
+        if(props.description){
+            var tStr = "<div style='float:right; padding: 10px;'><h4>" + String(props.description) + "<h4></div>"
+            var sUrl = "https://i.imgur.com/QLa6Vjy.png"
+            var sImg = "<div style='float:left;'><img height='100' width='100' src='" + sUrl + "'></div>"
+            var infoWindowSighting = new google.maps.InfoWindow({
+            content: sImg + tStr
+        });
+
+        marker.addListener('click', function(){
+            if (activeInfoWindow != null) { activeInfoWindow.close(); }
+            infoWindowSighting.open(map, marker);
+            activeInfoWindow = infoWindowSighting;
+        });
+        }
+        }
+
+
 
     function setMapOnAll(map) {
         for (let i = 0; i < markers.length; i++) {
@@ -176,7 +207,6 @@
 
     // function that fetches response from backend
     function whaleAPI(lat, lng) {
-        searchURL = "api.json?near=" + lat + "," + lng + "&radius=100"
         return fetch("/generate/", {
             method: "POST",
             body: JSON.stringify({lat,lng}),
@@ -194,14 +224,12 @@
     // function that awaits for response
     async function handleGenerate(lat, lng) {
         const response = await whaleAPI(lat, lng);
-        console.log(response)
-        return response
+        let data_list = response;
+            for(var i=0; i < data_list.length; i++){
+                addDataMarker(data_list[i]);
+            }
     }
 
-    // event listener for click on 'generate' button that uses searchLat and searchLng
-    document.getElementById("generate").addEventListener("click", () => {
-        handleGenerate(searchLat, searchLng)
-    })
 </script>
 
 <script defer
