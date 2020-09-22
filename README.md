@@ -70,6 +70,9 @@ We wanted to share the true mysticism and beauty of these majestic creatures. Wh
 ### Landing Page
 ![Live Landing Page](./images/Landing_Page.png)
 
+### Add Sightings Page
+![Live Add Sightings Page](./images/Add_Sightings_Page.png)
+
 ### Sighting's Index Page
 ![Live Index Page](./images/Index_Page.png)
 
