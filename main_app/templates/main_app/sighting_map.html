@@ -39,7 +39,7 @@
 </script>
 
 <script>
-    let map, infoWindow, myLatLng, searchLat, searchLng;
+    let map, infoWindow, geocoder, myLatLng, searchLat, searchLng;
     let activeInfoWindow = null;
     let markers = [];
     let data_list = []
@@ -57,46 +57,28 @@
         
         map = new google.maps.Map(document.getElementById('map'), options);
         infoWindow = new google.maps.InfoWindow();
+        geocoder = new google.maps.Geocoder();
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                position => {
-                    const pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    infoWindow.setPosition(pos);
-                    infoWindow.setContent("Location found.");
-                    infoWindow.open(map)
-                    map.setCenter(pos);
-                },
-                () => {
-                    handleLocationError(true, infowWindow, map.getCenter());
-                }
-            );
-        } else {
-            handleLocationError(false, infoWindow, map.getCenter());
-        }
+        findGeoLoc();
 
-        const geocoder = new google.maps.Geocoder();
+        
+
         document.getElementById("search").addEventListener("click", () => {
             geocodeAddress(geocoder, map);
         });
         
         document.getElementById("generate").addEventListener("click", () => {
             deleteMarkers();
+            handleGenerate(searchLat, searchLng);
             for(var i=0; i < sightings_list.length; i++){
                 cLat = parseFloat(sightings_list[i].lat)
                 cLng = parseFloat(sightings_list[i].lng)
-
                 if (cLat >= (parseFloat(searchLat) - 2) && cLat <= (parseFloat(searchLat) + 2)) {
                     if (cLng >= (parseFloat(searchLng) - 2) && cLng <= (parseFloat(searchLng) + 2)) {
                         addMarker(sightings_list[i]);
                     }
                 }
-            }
-            handleGenerate(searchLat, searchLng);
-            
+            }          
         });
 
         function addMarker(props){
@@ -229,6 +211,29 @@
                 addDataMarker(data_list[i]);
             }
     }
+
+    // find Geolocation
+    function findGeoLoc() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        infoWindow.setPosition(pos);
+                        infoWindow.setContent("Location found.");
+                        infoWindow.open(map)
+                        map.setCenter(pos);
+                    },
+                    () => {
+                        handleLocationError(true, infowWindow, map.getCenter());
+                    }
+                );
+            } else {
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
 
 </script>
 
