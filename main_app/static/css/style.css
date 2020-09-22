@@ -425,15 +425,160 @@ div.gm-style-iw-d {
   padding: 16px;
   text-align: left;
   background-color: rgb(1, 15, 30);
+  width: 33rem;
+  margin-top: 5rem;
+  margin-left: 5rem;
+  font-size: 20px;
 }
 
 .card-title-detail {
   font-size: 50px;
   font-weight: 700;
+  text-align: center;
 }
 
+.delete-btn {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  margin: 1rem auto;
+  margin-bottom: 5px;
+  min-width: 10px;
+  width: 6rem;
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: 'Rajdhani', sans-serif;
+  text-decoration: none;
+}
 
+.delete-btn:hover {
+  background: #ad0505;
+}
 
+.edit-btn {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 6rem;
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: 'Rajdhani', sans-serif;
+  text-decoration: none;
+}
 
+.edit-btn:hover {
+  background: #c0fdff;
+  color: black;
+}
+.material-icons {
+  cursor: pointer;
+}
 
+.like-btn {
+  float: right;
+}
+
+.like-btn:hover {
+  background: #c0fdff;
+  transition: 250ms background ease-in;
+}
+
+.like-text {
+  color: white;
+}
+
+.whale-photo {
+  width: 100%;
+  margin: 5px;
+  padding: 2rem 0rem;
+}
+
+.photo-upload-btn {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  margin: 1rem auto;
+  min-width: 10px;
+  width: 7rem;
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: 'Rajdhani', sans-serif;
+  text-decoration: none;
+}
+
+.photo-upload-btn:hover {
+  background: #c0fdff;
+  transition: 250ms background ease-in;
+  color: black;
+}
+
+.comment-input {
+  height: 100px;
+  width: 30rem;
+  margin-top: 50px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 18px;
+}
+
+.comment-container {
+  background-color: #c0fdff98;
+  margin-bottom: 14px;
+  color: #02020B;
+}
+
+.reply-containter {
+  background-color: rgba(61, 59, 59, 0.295);
+  margin-bottom: 14px;
+  color: black;
+}
+
+.delete-comment {
+  text-decoration: none;
+  color: #ad0505;
+  margin-left: 3px;
+  font-size: 15px;
+}
+
+.delete-header {
+  padding-top: 10rem;
+  color: #dd1212;
+  font-size: 80px;
+}
+
+.conf-txt {
+  font-size: 30px;
+}
+
+.cancel-delete {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  margin-left: 2rem;
+  min-width: 10px;
+  width: 7rem;
+  height: 2rem;
+  padding: .25rem;
+  transition: 250ms background ease-in;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: 'Rajdhani', sans-serif;
+  text-decoration: none;
+}
+
+.cancel-delete:hover {
+  background: #c0fdff;
+  transition: 250ms background ease-in;
+  color: black;
+}
 
