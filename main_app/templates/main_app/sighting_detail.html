@@ -3,21 +3,18 @@
 
 
 <h1>Sighting Details</h1>
-
-
-<div>
+<div class="sighting-container">  
     <div class="card-detail">
         <span class="card-title-detail">{{ object.title.capitalize }}</span>
-        <p>Date: {{ object.date }}</p>
+        <p>Species: {{ object.get_species_display }}</p>
+        <p>{{ object.description }}</p>
+        <p>{{ object.date }}</p>
         <p>Latitude: {{ object.latitude }}</p>
         <p>Longitude: {{ object.longitude }}</p>
         <p>Location: {{ object.location }}</p>
-        <p>Description: {{ object.description }}</p>
-        <p>Species: {{ object.get_species_display }}</p>
-        <div class="card-action" style="display:inline-flex; width:100%">
-            <a href="{% url 'sightings_update' object.id %}">Edit</a>
-            <a href="{% url 'sightings_delete' object.id %}">Delete</a>
-             <form action="{% url 'like_sighting' object.id %}" method="post">
+            <a href="{% url 'sightings_update' object.id %}" class="edit-btn">Edit</a>
+            <a href="{% url 'sightings_delete' object.id %}" class="delete-btn">Delete</a>
+             <form class="like-btn" action="{% url 'like_sighting' object.id %}" method="post">
                 {% csrf_token %} 
                 <button type="submit" name="sighting_id" style="background-color:transparent; border: none;">
                     {% if liked_it %}
@@ -26,90 +23,79 @@
                     <i style="color: grey" class='material-icons likes'>thumb_up</i>
                     {% endif %}
                     {% if total_likes %}
-                    <p style="margin-top: 0;"><small>{{ total_likes }} Likes</small></p>
+                    <p style="margin-top: 0;" class="like-text"><small>{{ total_likes }} Likes</small></p>
                     {% else %}
                     {% endif %} 
                 </button>
             </form>
-        </div>
+            
+            <form action="{% url 'add_comment' object.id %}" method="post">
+                {% csrf_token %}
+                <textarea name="text" class="comment-input" placeholder="Write a Comment" cols="40" rows="10" maxlength="1000" required="" id="id_text"></textarea>
+                <input type="submit" class="photo-upload-btn" value="Add Comment" class="btn">
+            </form>
+
+{% if sighting.has_comments.count %}
+<h4>{{object.title.capitalize }} has {{ sighting.has_comments.count }} comment{{ sighting.has_comments.count|pluralize }}</h4>
+    {% for comment in sighting.comment_set.all %}
+            
+        <div>
+            <div class="comment-container">
+                <div style="display: inline-flex;">{{ comment.text }}</div>
+                <div class="right" style = "text-transform:capitalize;" style="display: inline-flex; color: white;"><small>By {{ comment.user }}</small></div>
+                <div class="left" ><small>{{ comment.created_date }}</small></div>
+                <button  class="reply_button" id="reply_button_{{ comment.id }}" style=" background-color: transparent; border: none;">reply</button>
+                <button class="edit_button" id="edit_button_{{ comment.id }}">Edit</button>
+                <a class="delete-comment" href="{% url 'comments_delete' sighting.id comment.id %}">Delete</a>
             </div>
+                                            
+            <div class="left-align reply_form"  id="reply_form_{{ comment.id }}">
+                <form action="{% url 'add_reply' sighting.id comment.id %}" method="post">
+                    {% csrf_token %}
+                    <textarea placeholder="Write a Reply" class="comment-input"name="text" cols="40" rows="10" maxlength="1000" required="" id="id_text"></textarea>
+                    <input type="submit" class="photo-upload-btn" value="Add Reply" class="btn">
+                </form>
+            </div>
+                    
+            {% for reply in comment.reply_set.all %}
+            <div class="reply-containter">
+                <div style="display: inline-flex; color: white">{{ reply.text }}</div><br/>
+                <div class="right" style="display: inline-flex; color: white;">  By {{ reply.user }}</div>
+                <a class="delete-comment" href="{% url 'replies_delete' sighting.id comment.id reply.id %}">Delete</a>
+                {% endfor %}   
+            </div>
+                <div id="edit_field_{{ comment.id }}" class="edit_field">
+                    <form  action="{% url 'comments_update' object.id comment.id %}" method="post">
+                        {% csrf_token %}
+                        {{ comment_form.as_p }}
+                        <input type="submit" value="Edit Comment">
+                    </form>
+                </div>
+                {% endfor %}
+                {% else %}
+        <div>
+            No Comments Yet
         </div>
-    </div> 
+    {% endif %} 
 </div>
-<hr>
-<div>
+
+<div class="card-detail">
     {% for photo in sighting.photo_set.all %}
     <img class="whale-photo" src="{{photo.url}}">
     <br>
         {% if user == sighting.user %}
-            <a href="{% url 'photos_delete' sighting.id photo.id %}">DELETE PHOTO</a>
+            <a href="{% url 'photos_delete' sighting.id photo.id %}" class="delete-btn">Delete</a>
         {% endif %}
     {% empty %}
         <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+        <img src="https://i.imgur.com/AzyIR4f.png" alt="WhaleScope Logo">
     {% endfor %}
     {% if user == sighting.user %}
     <form action="{% url 'add_photo' object.id %}" enctype="multipart/form-data" method="post" class="card-panel">
         {% csrf_token %}
-        <input type="file" name="photo-file">
-        <br><br>
-        <input type="submit" value="Upload Photo" class="btn">
+        <input type="file"  name="photo-file">
+        <input type="submit" class="photo-upload-btn" value="Upload Photo" class="btn">
     </form>
     {% endif %} 
-   
 </div>
-<hr>
-<div class="row" id="comment_section">
-        
-        <form action="{% url 'add_comment' object.id %}" method="post">
-            {% csrf_token %}
-            {{ comment_form.as_p }}
-            <input type="submit" value="Add Comment" class="btn">
-        </form>
-        <br>
-        {% if sighting.has_comments.count %}
-            <h6>{{object.title.capitalize }} has {{ sighting.has_comments.count }} comment{{ sighting.has_comments.count|pluralize }}</h6>
-                {% for comment in sighting.comment_set.all %}
-                
-                    <div class="card-panel teal left-align">
-                            <div style="display: inline-flex; color: white">{{ comment.text }}</div> &nbsp;&nbsp; <div class="right" style = "text-transform:capitalize;" style="display: inline-flex; color: white;">By {{ comment.user }}</div>
-                                    <br>
-                                        <div class="left" style="color: white"><small>{{ comment.created_date }}</small></div><button class="right reply_button" id="reply_button_{{ comment.id }}" style="color: white; background-color: transparent; border: none;">reply</button>
-                                  
-                                            <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
-                                                <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
-                                                
-
-                                                                 
-                    </div>
-                        
-                        <div class="left-align reply_form"  id="reply_form_{{ comment.id }}">
-                            <form action="{% url 'add_reply' sighting.id comment.id %}" method="post">
-                                {% csrf_token %}
-                                {{ reply_form.as_p }}
-                                <input type="submit" value="Add Reply" class="btn">
-                            </form>
-                        </div>
-                        
-                        {% for reply in comment.reply_set.all %}
-                        <div class="card-panel teal" style="width: 70%;">
-                            <div style="display: inline-flex; color: white">{{ reply.text }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;">  {{ reply.user }}</div>
-                            <a href="{% url 'replies_delete' sighting.id comment.id reply.id %}">🚯</a>
-                            {% endfor %}   
-                        </div>
-                            <div id="edit_field_{{ comment.id }}" class="edit_field">
-                                <form  action="{% url 'comments_update' object.id comment.id %}" method="post">
-                                    {% csrf_token %}
-                                    {{ comment_form.as_p }}
-                                    <input type="submit" value="Edit Comment">
-                                </form>
-                            </div>
-                            {% endfor %}
-                            {% else %}
-                    <div>
-                        No Comments Yet
-                    </div>
-        {% endif %} 
-    </div>
-</div>
-
 {% endblock %}
