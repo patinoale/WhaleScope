@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  main {
+    margin: 5rem;
+  }
+</style>
+
+<h1 style="font-size: 50px;" style = "text-transform:capitalize;">Your Sightings</h1>
+
+{% for sighting in sightings %}
+  <div class="row">
+    <div class="column">
+    <div class="card">
+        <a href="{% url 'detail' sighting.id %}"><img src="https://i.imgur.com/AzyIR4f.png" alt="Whale Photo" style="width:100%;"></a>
+            <p style = "text-transform:capitalize;" class="card-title">{{ sighting.title }}</p> 
+            <p>Location: {{ sighting.location }}</p>
+            <p>Species: {{ sighting.get_species_display }}</p>
+            <p><small>{{ sighting.has_comments.count }} comment{{ sighting.has_comments.count|pluralize }}</small></p>
+            <p>{{ sighting.date }}</p>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

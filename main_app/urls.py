@@ -11,6 +11,7 @@ urlpatterns = [
     path('sightings/<int:pk>/update', views.SightingUpdate.as_view(), name='sightings_update'),
     path('sightings/<int:pk>/delete', views.SightingDelete.as_view(), name='sightings_delete'),
     path('accounts/signup/', views.signup, name='signup'),
+    path('profile/', views.profile, name='profile'),
     path('sightings/<int:pk>/add_comment/', views.add_comment, name='add_comment'),
     path('sightings/<int:pk>/<int:comment_id>/', views.comments_update, name='comments_update'),
     path('sightings/<int:sighting_id>/<int:comment_id>/comments_delete/', views.comments_delete, name='comments_delete'),
@@ -19,7 +20,11 @@ urlpatterns = [
     path('sightings/<int:sighting_id>/add_photo/', views.add_photo, name='add_photo'),
     path('sightings/<int:sighting_id>/<int:photo_id>/photos_delete/', views.photos_delete, name='photos_delete'),
     path('map/', views.map, name='map'),
+    path('generate/', views.generate, name='generate'),
     path('likes/<int:pk>/', views.like_sighting, name='like_sighting'),
+<<<<<<< HEAD
     path('likecomment/<int:pk>/<int:comment_id>/', views.like_comment, name='like_comment'),
     re_path(r'^map/generate', views.generate, name="generate")
+=======
+>>>>>>> master
 ]

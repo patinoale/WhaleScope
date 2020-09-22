@@ -7,56 +7,60 @@
     <h1>Add Sighting</h1>
 {% endif %}
 
-<form action="" method="post">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit!" class="btn">
-</form>
+<p>Fill in the input fields below with a title, date, and description for your whale sighting. Make sure to select a species!<br/>And don't stress out about the latitude and longitude. We got you!<br/>Just click on the map below wherever your whale sighting occurrred and the input fields will automatically populate with the correct coordinates.<br/>Double check that you like the location name and then click that 'Submit' button to add another dope scope to your collection. Gnarly!</p>
+<div class="sighting-container">
+<form action="" class="sighting-form" method="post">
+    <h2>Add Your Sighting</h2>
+    {% csrf_token  %}        
+        <input class="sighting-input"  placeholder="Title"type="text" name="title" maxlength="100" required="" id="id_title">
+        <input class="sighting-input" placeholder="Latitude" type="number" name="latitude" step="1e-9" required="" id="id_latitude"> 
+        <input class="sighting-input" placeholder="Longitude" type="number" name="longitude" step="1e-9" required="" id="id_longitude"> 
+        <input  class="sighting-input" placeholder="Location" type="text" name="location" maxlength="100" required="" id="id_location"> 
+        <textarea class= "sighting-description" placeholder="Sighting Description (max length 500 characters)" name="description" cols="40" rows="10" maxlength="500" required="" id="id_description"></textarea>
+        <input placeholder="Sighting Date" class="date-picker" type="date" name="date" required="" id="id_date">
 
-<!-- Ale to delete everything in script tags once we remove materialize -->
-<script>
-    var dateEl = document.getElementById('id_date');
-    M.Datepicker.init(dateEl, {
-      format: 'yyyy-mm-dd',
-      defaultDate: new Date(),
-      setDefaultDate: true,
-      autoClose: true
-    });
-    var selectEl = document.getElementById('id_species');
-    M.FormSelect.init(selectEl);
-</script>
-<div>
-<h3>Click the map below for latitude & longitude:</h3>
+        <select name="species" class="select-species" id="id_species">
+            <option value="1">Select Species</option>
+            <option value="2">Orca</option>
+            <option value="3">Minke</option>
+            <option value="4">Humpback</option>
+            <option value="5">Blue</option>
+            <option value="6">Sperm</option>
+            <option value="7">Beluga</option>
+            <option value="8">Gray</option>
+            <option value="9">Fin</option>
+            <option value="10">Dolphin</option>
+            <option value="11">Seal</option>
+            <option value="12">Sea Lion</option>
+            <option value="13">Sea Otter</option>
+            <option value="14">Other</option>
+            <option value="15">Unknown</option>
+        </select><br/>
+            <input class="login-submit" type="submit" value="Submit!" class="btn">
+</form>
+<form action="" class="map-container">
+    <h3>Click the map for latitude & longitude:</h3>
 <style>
     #map {
         height:400px;
-        width:400px;
+        width:600px;
+        margin-right: 33%;
     }
 </style>
 
-
-    <input id="address" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
-    <input id="submit" type ="button" value="Search" />
-
+    <div>
+        <input id="address" class="location-input" type="textbox" onfocus="this.value=''" value="Enter Your Location" />
+        <input id="submit" class="location-submit"  type ="button" value="Search" />
+    </div>
     <div id="map"></div>
+
+</form>
 </div>
 
 <script>
-    var input = document.getElementById("address");
-    input.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            document.getElementById("submit").click();
-        }
-    });
-</script>
-
-<script>
-    let map, infoWindowLatLng;
-    let myLatLng = {lat:34.0522,lng:-118.2437};
-    function initMap(){
+    let map, infoWindowLatLng, geocoder;
+    let myLatLng = {lat:41.498628,lng:-81.702427}
+    function initMap() {
         var options = {
             zoom: 8,
             center: myLatLng
@@ -64,7 +68,52 @@
         
         map = new google.maps.Map(document.getElementById('map'), options);
         infoWindow = new google.maps.InfoWindow();
+        geocoder = new google.maps.Geocoder();
+        infoWindowLatLng = new google.maps.InfoWindow(
+            {content: "Click the map to get Lat/Lng!", position: myLatLng}
+        );
+        infoWindowLatLng.open(map);      
+        map.addListener('click', function(event) {
+            infoWindowLatLng.close()
+            infoWindowLatLng = new google.maps.InfoWindow({position: event.latLng});
+            var latLngStr = event.latLng.toString()
+            infoWindowLatLng.setContent(latLngStr);
+            infoWindowLatLng.open(map);
+            newLaLn = latLngStr.replace('(','').replace(')','')
+            arrLaLn = newLaLn.split(',')
+            sLat = parseFloat(arrLaLn[0]).toFixed(9)
+            sLng = parseFloat(arrLaLn[1]).toFixed(9)
+            document.getElementById("id_latitude").value = sLat
+            document.getElementById("id_longitude").value = sLng
+    
+            geocoder.geocode({
+                'latLng': event.latLng
+                }, 
+                function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var addStr = results[0].formatted_address;
+                        document.getElementById("id_location").value = addStr;
+                    }
+                }
+            });
+        });
+    }
+    
+    findGeoLoc();
+    
+    document.getElementById("submit").addEventListener("click", () => {
+        geocodeAddress(geocoder, map);
+    });
+    
+    document.getElementById("address").addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("submit").click();
+        }
+    });
 
+    function findGeoLoc() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 position => {
@@ -84,45 +133,8 @@
         } else {
             handleLocationError(false, infoWindow, map.getCenter());
         }
+    }
 
-        infoWindowLatLng = new google.maps.InfoWindow(
-            {content: "Click the map to get Lat/Lng!", position: myLatLng}
-        );
-
-        infoWindowLatLng.open(map);
-
-        map.addListener('click', function(event) {
-            infoWindowLatLng.close()
-            infoWindowLatLng = new google.maps.InfoWindow({position: event.latLng});
-            var latLngStr = event.latLng.toString()
-            infoWindowLatLng.setContent(latLngStr);
-            infoWindowLatLng.open(map);
-            newLaLn = latLngStr.replace('(','').replace(')','')
-            arrLaLn = newLaLn.split(',')
-            sLat = parseFloat(arrLaLn[0]).toFixed(9)
-            sLng = parseFloat(arrLaLn[1]).toFixed(9)
-            document.getElementById("id_latitude").value = sLat
-            document.getElementById("id_longitude").value = sLng
-
-            geocoder.geocode({
-                'latLng': event.latLng
-            }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        var addStr = results[0].formatted_address;
-                        document.getElementById("id_location").value = addStr;
-                    }
-                }
-            });
-
-        });
-    
-        const geocoder = new google.maps.Geocoder();
-        document.getElementById("submit").addEventListener("click", () => {
-            geocodeAddress(geocoder, map);
-        });
-    }  
-    
     function geocodeAddress(geocoder, resultsMap) {
         const address = document.getElementById("address").value;
         geocoder.geocode({ address: address }, ( results, status ) => {
@@ -137,5 +149,6 @@
 <script defer
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&callback=initMap">
 </script>
+
 
 {% endblock %}
