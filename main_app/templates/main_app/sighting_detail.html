@@ -5,9 +5,9 @@
 <h1>Sighting Details</h1>
 
 
-<div >
-    <div class="card-content">
-        <span class="card-title">{{ object.title.capitalize }}</span>
+<div>
+    <div class="card-detail">
+        <span class="card-title-detail">{{ object.title.capitalize }}</span>
         <p>Date: {{ object.date }}</p>
         <p>Latitude: {{ object.latitude }}</p>
         <p>Longitude: {{ object.longitude }}</p>
@@ -23,7 +23,6 @@
                     <button type="submit" name="sighting_id" style="background-color:transparent; border: none;">
                         {% if liked_it %}
                         <i style="color: #C0FDFF" class='material-icons likes'>thumb_up</i>
-
                         {% else %}
                         <i style="color: grey" class='material-icons likes'>thumb_up</i>
                         {% endif %}
@@ -75,9 +74,10 @@
                             <div style="display: inline-flex; color: white">{{ comment.text }}</div> &nbsp;&nbsp; <div class="right" style = "text-transform:capitalize;" style="display: inline-flex; color: white;">By {{ comment.user }}</div>
                                     <br>
                                         <div class="left" style="color: white"><small>{{ comment.created_date }}</small></div><button class="right reply_button" id="reply_button_{{ comment.id }}" style="color: white; background-color: transparent; border: none;">reply</button>
-                                  
+                                        {% if user == comment.user %}
                                             <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
                                                 <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
+                                        {% endif %}
                                                 <form action="{% url 'like_comment' sighting.id comment.id %}" method="post">
                                                     {% csrf_token %} 
                                                     <button type="submit" name="comment_id" style="background-color:transparent; border: none;">
