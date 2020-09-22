@@ -323,6 +323,59 @@ div.gm-style-iw-d {
   color: black;
 }
 
+.sighting-form {
+  background: rgb(1, 15, 30);
+  box-shadow: 0 0 1rem #c0fdff;
+  height: 550px;
+  margin-top: 3.75rem;
+  margin-left: 10rem;
+  width: 370px;
+  padding: 2rem;
+}
+
+.sighting-input {
+  background: white;
+  border: 0 solid;
+  border-bottom: 1px solid rgba(white, .5);
+  color: rgb(20, 19, 19);
+  display: block;
+  margin: .75rem;
+  padding: .5rem;
+  transition: 250ms background ease-in;
+  width: 20rem;
+  height: 1rem;
+  font-size: 20px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.date-picker {
+  width: 8rem;
+  height: .75rem;
+  font-size: 13px;
+  font-family: 'Rajdhani', sans-serif;
+  margin: 1rem;
+  padding: .5rem;
+}
+
+.sighting-description {
+  height: 80px;
+  width: 20.7rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  margin-right: 14px;
+}
+
+.select-species {
+  width: 8rem;
+  height: 2.2rem;
+  font-size: 14px;
+  font-family: 'Rajdhani', sans-serif;
+  margin: 1rem;
+  padding: .5rem;
+}
+
+
+
 
 
 

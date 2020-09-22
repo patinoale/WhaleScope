@@ -7,57 +7,38 @@
     <h1>Add Sighting</h1>
 {% endif %}
 
-<!-- <form action="" method="post"> -->
-    <!-- <table> -->
-        <form action="" method="post">
-            {% csrf_token %}
-            <!-- <input type="hidden" name="csrfmiddlewaretoken" value="bawNgeT9MQdQmr7eRqfpQHRegWrax7LOUxwqsVIk2NybFHoPFDuyvT5a50htKDc1"> -->
-            <!-- <table> -->
-                <input placeholder="title"type="text" name="title" maxlength="100" required="" id="id_title">
-                <input placeholder="Sighting Date" type="text" name="date" required="" id="id_date">
-                <input placeholder="Latitude" type="number" name="latitude" step="1e-9" required="" id="id_latitude"> 
-                <input placeholder="Longitude" type="number" name="longitude" step="1e-9" required="" id="id_longitude"> 
-                <input placeholder="Location" type="text" name="location" maxlength="100" required="" id="id_location"> 
-                <textarea placeholder="Sighting Description" name="description" cols="40" rows="10" maxlength="500" required="" id="id_description"></textarea>
-                <select name="species" id="id_species">
-                    <option value="1">Select Species</option>
-                    <option value="2">Orca</option>
-                    <option value="3">Minke</option>
-                    <option value="4">Humpback</option>
-                    <option value="5">Blue</option>
-                    <option value="6">Sperm</option>
-                    <option value="7">Beluga</option>
-                    <option value="8">Gray</option>
-                    <option value="9">Fin</option>
-                    <option value="10">Dolphin</option>
-                    <option value="11">Seal</option>
-                    <option value="12">Sea Lion</option>
-                    <option value="13">Sea Otter</option>
-                    <option value="14">Other</option>
-                    <option value="15">Unknown</option>
-        </select></td></tr>
-            <!-- </tbody></table> -->
-            <input type="submit" value="Submit!" class="btn">
-        </form>
-    <!-- </table> -->
-    <!-- <input type="submit" value="Submit!" class="btn"> -->
-<!-- </form> -->
 
+<form action="" class="sighting-form" method="post">
+    <h2>Add Your Sighting</h2>
+    {% csrf_token  %}        
+        <input class="sighting-input"  placeholder="Title"type="text" name="title" maxlength="100" required="" id="id_title">
+        <input class="sighting-input" placeholder="Latitude" type="number" name="latitude" step="1e-9" required="" id="id_latitude"> 
+        <input class="sighting-input" placeholder="Longitude" type="number" name="longitude" step="1e-9" required="" id="id_longitude"> 
+        <input class="sighting-input" placeholder="Longitude" type="number" name="longitude" step="1e-9" required="" id="id_longitude"> 
+        <input  class="sighting-input" placeholder="Location" type="text" name="location" maxlength="100" required="" id="id_location"> 
+        <textarea class= "sighting-description" placeholder="Sighting Description (max length 500 characters)" name="description" cols="40" rows="10" maxlength="500" required="" id="id_description"></textarea>
+        <input placeholder="Sighting Date" class="date-picker" type="date" name="date" required="" id="id_date">
 
-
-<!-- Ale to delete everything in script tags once we remove materialize -->
-<!-- <script>
-    var dateEl = document.getElementById('id_date');
-    M.Datepicker.init(dateEl, {
-      format: 'yyyy-mm-dd',
-      defaultDate: new Date(),
-      setDefaultDate: true,
-      autoClose: true
-    });
-    var selectEl = document.getElementById('id_species');
-    M.FormSelect.init(selectEl);
-</script> -->
-
+        <select name="species" class="select-species" id="id_species">
+            <option value="1">Select Species</option>
+            <option value="2">Orca</option>
+            <option value="3">Minke</option>
+            <option value="4">Humpback</option>
+            <option value="5">Blue</option>
+            <option value="6">Sperm</option>
+            <option value="7">Beluga</option>
+            <option value="8">Gray</option>
+            <option value="9">Fin</option>
+            <option value="10">Dolphin</option>
+            <option value="11">Seal</option>
+            <option value="12">Sea Lion</option>
+            <option value="13">Sea Otter</option>
+            <option value="14">Other</option>
+            <option value="15">Unknown</option>
+        </select><br/>
+            <input class="login-submit" type="submit" value="Submit!" class="btn">
+</form>
+<form action="" class="sighting-form">
 <div>
     <h3>Click the map below for latitude & longitude:</h3>
 <style>
@@ -74,6 +55,7 @@
     </div>
     <div id="map"></div>
 </div>
+</form>
 
 <script>
     let map, infoWindowLatLng, geocoder;
@@ -167,5 +149,6 @@
 <script defer
     src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&callback=initMap">
 </script>
+
 
 {% endblock %}
