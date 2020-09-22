@@ -298,6 +298,10 @@ footer {
     margin-bottom: 20px;
   }
 }
+  /* .clicked {
+    background-color: #C0FDFF
+  } */
+
 
 .card:hover {
   background: #c0fdff;
