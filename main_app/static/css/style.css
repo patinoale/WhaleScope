@@ -420,6 +420,18 @@ div.gm-style-iw-d {
     font-family: 'Rajdhani', sans-serif;
 }
 
+.card-detail {
+  box-shadow: 0 0 1rem #c0fdff;
+  padding: 16px;
+  text-align: left;
+  background-color: rgb(1, 15, 30);
+}
+
+.card-title-detail {
+  font-size: 50px;
+  font-weight: 700;
+}
+
 
 
 
