@@ -16,8 +16,10 @@
         <p>Species: {{ object.get_species_display }}</p>
             </div>
             <div class="card-action" style="display:inline-flex; width:100%">
+                {% if user == sighting.user %}
                 <a href="{% url 'sightings_update' object.id %}">Edit</a>
                 <a href="{% url 'sightings_delete' object.id %}">Delete</a>
+                {% endif %}
                  <form action="{% url 'like_sighting' object.id %}" method="post">
                     {% csrf_token %} 
                     <button type="submit" name="sighting_id" style="background-color:transparent; border: none;">
@@ -70,12 +72,10 @@
                             <div style="display: inline-flex; color: white">{{ comment.text }}</div> &nbsp;&nbsp; <div class="right" style = "text-transform:capitalize;" style="display: inline-flex; color: white;">By {{ comment.user }}</div>
                                     <br>
                                         <div class="left" style="color: white"><small>{{ comment.created_date }}</small></div><button class="right reply_button" id="reply_button_{{ comment.id }}" style="color: white; background-color: transparent; border: none;">reply</button>
-                                  
+                                        {% if user == comment.user %}
                                             <button class="edit_button" id="edit_button_{{ comment.id }}">✏️</button>
-                                                <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a>
-                                                
-
-                                                                 
+                                                <a href="{% url 'comments_delete' sighting.id comment.id %}">🚯</a> 
+                                        {% endif %}                                    
                     </div>
                         
                         <div class="left-align reply_form"  id="reply_form_{{ comment.id }}">
@@ -89,7 +89,9 @@
                         {% for reply in comment.reply_set.all %}
                         <div class="card-panel teal" style="width: 70%;">
                             <div style="display: inline-flex; color: white">{{ reply.text }}</div> &nbsp;&nbsp; <div class="right" style="display: inline-flex; color: white;">  {{ reply.user }}</div>
+                            {% if user == reply.user %}
                             <a href="{% url 'replies_delete' sighting.id comment.id reply.id %}">🚯</a>
+                            {% endif %}
                             {% endfor %}   
                         </div>
                             <div id="edit_field_{{ comment.id }}" class="edit_field">
